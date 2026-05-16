@@ -21,7 +21,9 @@
       "@services/*": ["src/app/services/*"],
       "@directives/*": ["src/app/directives/*"],
       "@spartan-ng/helm/card": ["./libs/ui/card/src/index.ts"],
-      "@spartan-ng/helm/utils": ["./libs/ui/utils/src/index.ts"]
+      "@spartan-ng/helm/utils": ["./libs/ui/utils/src/index.ts"],
+      "@spartan-ng/helm/button": ["./libs/ui/button/src/index.ts"],
+      "@spartan-ng/helm/input": ["./libs/ui/input/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
