@@ -1,0 +1,16 @@
+<td hlmTableCell class="w-[60px] text-center font-medium text-muted-foreground relative p-0">
+  {{ index() + 1 }}
+</td>
+<td>
+  <app-play-button
+    [isPlaying]="isCurrentTrackPlaying()"
+    (click)="togglePlay($event)"
+    customClass="h-8 w-8 rounded-full cursor-pointer"
+  >
+  </app-play-button>
+</td>
+
+<td hlmTableCell class="font-semibold text-foreground">{{ track().name }}</td>
+<td hlmTableCell class="text-right w-[100px] text-muted-foreground font-medium tabular-nums">
+  {{ track().duration | duration }}
+</td>
