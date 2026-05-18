@@ -1,6 +1,6 @@
 # Sprint 1
 
-- **What was done:** Created the Header component for the ChiliFlow project. Set up the project styling foundation with Tailwind 4 and spartan-ng UI library,  configured custom brand color tokens, and built a responsive 3-section header (logo + nav links, centered search bar, user button). Implemented a debounced live search with Reactive Forms emitting a typed output event to the parent component.
+- **What was done:** Created the Header component for the ChiliFlow project. Set up the project styling foundation with Tailwind 4 and spartan-ng UI library, configured custom brand color tokens, and built a responsive 3-section header (logo + nav links, centered search bar, user button). Implemented a debounced live search with Reactive Forms emitting a typed output event to the parent component.
 
 - **Problems:**
 
@@ -18,7 +18,7 @@
 
 3. Used takeUntilDestroyed() from @angular/core/rxjs-interop in the constructor to automatically clean up the subscription when the component is destroyed — no manual lifecycle hooks required.
 
-- **What I learned:** How to create project, generate components, Angular 17+ public/ folder convention for static assets (no more src/assets). Working with spartan-ng helm components and how their internal styling can conflict with custom Tailwind classes. The signal-based output() API replacing @Output() decorators. Reactive Forms FormControl with valueChanges, combined with RxJS operators debounceTime and distinctUntilChanged for debounced search input. takeUntilDestroyed() for automatic subscription cleanup.  Deeper understanding of computed() (derived state) vs effect() (side effects) and when each is appropriate.
+- **What I learned:** How to create project, generate components, Angular 17+ public/ folder convention for static assets (no more src/assets). Working with spartan-ng helm components and how their internal styling can conflict with custom Tailwind classes. The signal-based output() API replacing @Output() decorators. Reactive Forms FormControl with valueChanges, combined with RxJS operators debounceTime and distinctUntilChanged for debounced search input. takeUntilDestroyed() for automatic subscription cleanup. Deeper understanding of computed() (derived state) vs effect() (side effects) and when each is appropriate.
 
 - **Plans:** Set up app.routes.ts with placeholder routes for Discover, Search, Library, and About Us so the navigation links resolve correctly. Replace the temporary isLogged signal with a real auth service.
 

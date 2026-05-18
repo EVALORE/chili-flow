@@ -13,10 +13,10 @@ import { HlmTableImports } from '@spartan-ng/helm/table';
 })
 export class TrackList {
   tracks = input<Track[]>([]);
-  
+
   playingTrackId = signal<string | null>(null);
 
   onPlayToggled(trackId: string): void {
-    this.playingTrackId.update(current => (current === trackId ? null : trackId));
+    this.playingTrackId.update((current) => (current === trackId ? null : trackId));
   }
 }

@@ -32,7 +32,9 @@ describe('AlbumCard', () => {
   });
 
   it('renders album details, cover image, and album route link', () => {
-    const card = fixture.nativeElement.querySelector('[data-testid="album-card-album-1"]') as HTMLAnchorElement;
+    const card = fixture.nativeElement.querySelector(
+      '[data-testid="album-card-album-1"]',
+    ) as HTMLAnchorElement;
     const image = fixture.nativeElement.querySelector('img') as HTMLImageElement;
 
     expect(card).toBeTruthy();
@@ -52,7 +54,9 @@ describe('AlbumCard', () => {
     } satisfies AlbumCardData);
     fixture.detectChanges();
 
-    const fallback = fixture.nativeElement.querySelector('[data-testid="album-card-fallback"]') as HTMLElement;
+    const fallback = fixture.nativeElement.querySelector(
+      '[data-testid="album-card-fallback"]',
+    ) as HTMLElement;
 
     expect(fallback).toBeTruthy();
     expect(fallback.textContent?.trim()).toBe('O');
@@ -64,7 +68,9 @@ describe('AlbumCard', () => {
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
 
-    const skeleton = fixture.nativeElement.querySelector('[data-testid="album-card-loading"]') as HTMLElement;
+    const skeleton = fixture.nativeElement.querySelector(
+      '[data-testid="album-card-loading"]',
+    ) as HTMLElement;
 
     expect(skeleton).toBeTruthy();
     expect(skeleton.getAttribute('aria-busy')).toBe('true');
@@ -80,8 +86,12 @@ describe('AlbumCard', () => {
     } satisfies AlbumCardData);
     fixture.detectChanges();
 
-    const title = fixture.nativeElement.querySelector('[data-testid="album-card-title"]') as HTMLElement;
-    const artist = fixture.nativeElement.querySelector('[data-testid="album-card-artist"]') as HTMLElement;
+    const title = fixture.nativeElement.querySelector(
+      '[data-testid="album-card-title"]',
+    ) as HTMLElement;
+    const artist = fixture.nativeElement.querySelector(
+      '[data-testid="album-card-artist"]',
+    ) as HTMLElement;
 
     expect(title.classList.contains('overflow-hidden')).toBe(true);
     expect(title.classList.contains('whitespace-nowrap')).toBe(true);
