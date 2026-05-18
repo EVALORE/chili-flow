@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Track } from '@models/album';
 
 @Pipe({
-  name: 'totalDuration'
+  name: 'totalDuration',
 })
 export class TotalDurationPipe implements PipeTransform {
   transform(tracks: Track[] | undefined | null): number {

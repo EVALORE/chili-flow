@@ -120,8 +120,12 @@ describe('Tracks', () => {
     fixture.componentRef.setInput('currentTrackId', 'alpha');
     fixture.detectChanges();
 
-    const currentRow = fixture.nativeElement.querySelector('[data-testid="track-row-alpha"]') as HTMLElement;
-    const playButton = currentRow.querySelector('button[aria-label="Pause Alpha"]') as HTMLButtonElement;
+    const currentRow = fixture.nativeElement.querySelector(
+      '[data-testid="track-row-alpha"]',
+    ) as HTMLElement;
+    const playButton = currentRow.querySelector(
+      'button[aria-label="Pause Alpha"]',
+    ) as HTMLButtonElement;
 
     playButton.click();
     fixture.detectChanges();
@@ -133,14 +137,16 @@ describe('Tracks', () => {
   });
 
   function clickSortButton(label: string): void {
-    const button = fixture.nativeElement.querySelector(`button[aria-label="${label}"]`) as HTMLButtonElement;
+    const button = fixture.nativeElement.querySelector(
+      `button[aria-label="${label}"]`,
+    ) as HTMLButtonElement;
     button.click();
     fixture.detectChanges();
   }
 
   function trackTitles(): string[] {
-    return Array.from(fixture.nativeElement.querySelectorAll('[data-testid="track-title"]')).map((element) =>
-      (element as HTMLElement).textContent?.trim() ?? '',
+    return Array.from(fixture.nativeElement.querySelectorAll('[data-testid="track-title"]')).map(
+      (element) => (element as HTMLElement).textContent?.trim() ?? '',
     );
   }
 
