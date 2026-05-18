@@ -12,16 +12,18 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "baseUrl": "./",
     "paths": {
-      "@models/*": ["src/app/models/*"],
-      "@pipes/*": ["src/app/pipes/*"],
-      "@components/*": ["src/app/components/*"],
-      "@views/*": ["src/app/views/*"],
-      "@services/*": ["src/app/services/*"],
-      "@directives/*": ["src/app/directives/*"],
+      "@models/*": ["./src/app/models/*"],
+      "@pipes/*": ["./src/app/pipes/*"],
+      "@components/*": ["./src/app/components/*"],
+      "@views/*": ["./src/app/views/*"],
+      "@services/*": ["./src/app/services/*"],
+      "@directives/*": ["./src/app/directives/*"],
       "@spartan-ng/helm/card": ["./libs/ui/card/src/index.ts"],
-      "@spartan-ng/helm/utils": ["./libs/ui/utils/src/index.ts"]
+      "@spartan-ng/helm/utils": ["./libs/ui/utils/src/index.ts"],
+      "@spartan-ng/helm/table": ["./libs/ui/table/src/index.ts"],
+      "@spartan-ng/helm/button": ["./libs/ui/button/src/index.ts"],
+      "@spartan-ng/helm/icon": ["./libs/ui/icon/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
