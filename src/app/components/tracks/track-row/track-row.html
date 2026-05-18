@@ -1,0 +1,100 @@
+@if (isColumnVisible('number')) {
+  <td hlmTableCell class="relative w-12 text-center">
+    <span
+      class="inline-flex min-h-8 min-w-8 items-center justify-center group-hover:opacity-0 group-focus-within:opacity-0"
+      [class.opacity-0]="isCurrentTrack()"
+      aria-hidden="true"
+    >
+      {{ displayNumber() }}
+    </span>
+    <app-play-button
+      class="pointer-events-none absolute top-1/2 left-1/2 inline-flex min-h-8 min-w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center opacity-0 group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100"
+      [class.pointer-events-auto]="isCurrentTrack()"
+      [class.opacity-100]="isCurrentTrack()"
+      [isPlaying]="isCurrentTrack()"
+      [ariaLabel]="isCurrentTrack() ? 'Pause ' + track().title : 'Play ' + track().title"
+      customClass="h-8 w-8 rounded-full cursor-pointer"
+      (click)="togglePlay()"
+    />
+  </td>
+}
+
+@if (isColumnVisible('title')) {
+  <td hlmTableCell class="flex min-w-72 items-center gap-3">
+    @if (track().coverUrl) {
+      <img
+        class="h-11 w-11 flex-none rounded-sm bg-brand-border object-cover"
+        [src]="track().coverUrl"
+        [alt]="track().album || track().title"
+      />
+    } @else {
+      <span
+        class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-sm bg-brand-border font-bold text-foreground uppercase"
+        aria-hidden="true"
+      >
+        {{ track().title.charAt(0) }}
+      </span>
+    }
+
+    <span class="grid min-w-0 gap-0.5">
+      <span class="flex min-w-0 items-center gap-1.5">
+        <span
+          class="overflow-hidden font-bold text-ellipsis text-foreground"
+          data-testid="track-title"
+        >
+          {{ track().title }}
+        </span>
+        @if (track().explicit) {
+          <span
+            class="inline-flex h-4 w-4 items-center justify-center rounded-[3px] bg-brand-muted text-[0.625rem] font-extrabold text-brand-tertiary"
+            aria-label="Explicit"
+          >
+            E
+          </span>
+        }
+      </span>
+
+      @if (artistsText()) {
+        <span class="text-brand-muted">{{ artistsText() }}</span>
+      }
+    </span>
+  </td>
+}
+
+@if (isColumnVisible('album')) {
+  <td hlmTableCell class="text-brand-muted">
+    {{ track().album || '-' }}
+  </td>
+}
+
+@if (isColumnVisible('date')) {
+  <td hlmTableCell class="text-brand-muted">
+    @if (track().dateAdded) {
+      {{ track().dateAdded | date: 'mediumDate' }}
+    } @else {
+      <span class="text-brand-muted">-</span>
+    }
+  </td>
+}
+
+@if (isColumnVisible('duration')) {
+  <td hlmTableCell class="w-26 text-right font-semibold text-brand-muted tabular-nums">
+    {{ track().durationSeconds | duration }}
+  </td>
+}
+
+@if (isColumnVisible('actions')) {
+  <td hlmTableCell class="w-14 text-right">
+    <button
+      hlmBtn
+      type="button"
+      variant="ghost"
+      size="icon-sm"
+      class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      [attr.aria-label]="'Open actions for ' + track().title"
+      (click)="selectAction()"
+    >
+      <ng-icon hlm size="sm" name="lucideMoreHorizontal" aria-hidden="true" />
+    </button>
+  </td>
+}

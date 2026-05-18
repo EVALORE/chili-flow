@@ -12,7 +12,9 @@
 
   <div class="flex flex-1 justify-center">
     <div class="flex items-center rounded-full px-4 gap-2 bg-brand-surface">
-      <svg lucideSearch class="text-brand-muted"></svg>
+      <div>
+        <ng-icon hlm size="sm" name="lucideSearch" />
+      </div>
       <input hlmInput id="search-input" type="text" placeholder="Search" [formControl]="searchControl"
              class="border-0 !bg-transparent outline-none shadow-none flex-1 min-w-64" />
     </div>
@@ -20,7 +22,7 @@
 
   <div class="flex flex-1 justify-end">
     <button hlmBtn variant="outline" class="bg-brand-surface rounded-full border-0">
-      <svg lucideCircleUserRound></svg>
+      <ng-icon hlm size="sm" name="lucideCircleUserRound"></ng-icon>
       @if (isLogged()) {
         <span class="font-semibold">Sign In</span>
       }

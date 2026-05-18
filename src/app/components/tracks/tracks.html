@@ -1,0 +1,137 @@
+<section class="grid w-full gap-3" aria-label="Tracks">
+  <app-track-filter
+    [query]="filterQuery()"
+    (queryChanged)="setFilter($event)"
+    (cleared)="clearFilter()"
+  />
+
+  <div hlmTableContainer>
+    <table hlmTable class="min-w-184 border-separate border-spacing-y-1">
+      <caption hlmCaption class="sr-only">
+        Track list with sorting and filtering
+      </caption>
+      <thead hlmTableHeader>
+        <tr hlmTableRow>
+          @if (isColumnVisible('number')) {
+            <th hlmTableHead class="w-12 text-center" scope="col">#</th>
+          }
+
+          @if (isColumnVisible('title')) {
+            <th hlmTableHead scope="col" [attr.aria-sort]="sortAria('title')">
+              <button
+                type="button"
+                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                [attr.aria-label]="sortLabel('title', 'title')"
+                (click)="toggleSort('title')"
+              >
+                <span>Title</span>
+                <ng-icon hlm size="sm" [name]="sortIcon('title')" aria-hidden="true" />
+              </button>
+            </th>
+          }
+
+          @if (isColumnVisible('album')) {
+            <th hlmTableHead scope="col" [attr.aria-sort]="sortAria('album')">
+              <button
+                type="button"
+                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                [attr.aria-label]="sortLabel('album', 'album')"
+                (click)="toggleSort('album')"
+              >
+                <span>Album</span>
+                <ng-icon hlm size="sm" [name]="sortIcon('album')" aria-hidden="true" />
+              </button>
+            </th>
+          }
+
+          @if (isColumnVisible('date')) {
+            <th hlmTableHead scope="col" [attr.aria-sort]="sortAria('date')">
+              <button
+                type="button"
+                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                [attr.aria-label]="sortLabel('date', 'date added')"
+                (click)="toggleSort('date')"
+              >
+                <span>Date added</span>
+                <ng-icon hlm size="sm" [name]="sortIcon('date')" aria-hidden="true" />
+              </button>
+            </th>
+          }
+
+          @if (isColumnVisible('duration')) {
+            <th
+              hlmTableHead
+              class="w-26 text-right"
+              scope="col"
+              [attr.aria-sort]="sortAria('duration')"
+            >
+              <button
+                type="button"
+                class="inline-flex min-h-8 w-full cursor-pointer items-center justify-end gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                [attr.aria-label]="sortLabel('duration', 'duration')"
+                (click)="toggleSort('duration')"
+              >
+                <ng-icon hlm size="sm" name="lucideClock" aria-hidden="true" />
+                <span class="sr-only">Duration</span>
+                <ng-icon hlm size="sm" [name]="sortIcon('duration')" aria-hidden="true" />
+              </button>
+            </th>
+          }
+
+          @if (isColumnVisible('actions')) {
+            <th hlmTableHead class="w-14 text-right" scope="col">
+              <span class="sr-only">Actions</span>
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody hlmTableBody>
+        @if (loading()) {
+          <tr hlmTableRow>
+            <td
+              hlmTableCell
+              class="h-20 text-center text-brand-muted"
+              [attr.colspan]="visibleColumns().length"
+            >
+              Loading tracks...
+            </td>
+          </tr>
+        } @else if (error()) {
+          <tr hlmTableRow>
+            <td
+              hlmTableCell
+              class="h-20 text-center text-destructive"
+              [attr.colspan]="visibleColumns().length"
+              role="alert"
+            >
+              {{ error() }}
+            </td>
+          </tr>
+        } @else if (rows().length === 0) {
+          <tr hlmTableRow>
+            <td
+              hlmTableCell
+              class="h-20 text-center text-brand-muted"
+              [attr.colspan]="visibleColumns().length"
+            >
+              {{ emptyMessage() }}
+            </td>
+          </tr>
+        } @else {
+          @for (track of rows(); track track.id; let idx = $index) {
+            <tr
+              app-track-row
+              [track]="track"
+              [index]="idx"
+              [visibleColumns]="visibleColumns()"
+              [currentTrackId]="currentTrackId()"
+              (playToggled)="togglePlay($event)"
+              (actionSelected)="selectAction($event)"
+            ></tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
