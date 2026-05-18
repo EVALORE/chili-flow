@@ -1,22 +1,21 @@
 import { Component, input } from '@angular/core';
-import { HlmButtonImports, ButtonVariants } from '@spartan-ng/helm/button';
+import { HlmButton, ButtonVariants } from '@spartan-ng/helm/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { heroPlay } from '@ng-icons/heroicons/outline';
-import { heroPause } from '@ng-icons/heroicons/outline';
+import { lucidePlay, lucidePause } from '@ng-icons/lucide';
+import { HlmIcon } from '@spartan-ng/helm/icon';
 
 @Component({
   selector: 'app-play-button',
-  imports: [HlmButtonImports, NgIcon],
+  imports: [HlmButton, NgIcon, HlmIcon],
   templateUrl: './play-button.html',
-  providers: [provideIcons({ heroPlay, heroPause })],
+  providers: [provideIcons({ lucidePlay, lucidePause })],
 })
 export class PlayButton {
-  protected readonly PlayIcon = 'heroPlay';
-  protected readonly PauseIcon = 'heroPause';
-
   variant = input<ButtonVariants['variant']>('ghost');
 
   customClass = input<string>('');
 
   isPlaying = input<boolean>(false);
+
+  ariaLabel = input<string>('Play track');
 }

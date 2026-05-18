@@ -1,7 +1,15 @@
-<button hlmBtn [variant]="variant()" size="icon" [class]="customClass()">
+<button
+  hlmBtn
+  type="button"
+  [variant]="variant()"
+  size="icon"
+  [class]="customClass()"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-pressed]="isPlaying()"
+>
   @if (isPlaying()) {
-    <ng-icon [name]="PauseIcon" class="h-4 w-4 fill-current" />
+    <ng-icon hlm size="sm" name="lucidePause" class="fill-current" />
   } @else {
-    <ng-icon [name]="PlayIcon" class="h-4 w-4 fill-current ml-0.5" />
+    <ng-icon hlm size="sm" name="lucidePlay" class="fill-current ml-0.5" />
   }
 </button>

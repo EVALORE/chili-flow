@@ -1,0 +1,35 @@
+<div class="flex items-center justify-end gap-2 max-sm:justify-stretch">
+  <label class="relative w-[min(100%,22rem)] max-sm:w-full" for="tracks-filter">
+    <span class="sr-only">Filter tracks</span>
+    <ng-icon
+      hlm
+      size="sm"
+      name="lucideSearch"
+      class="absolute top-1/2 left-3 z-10 -translate-y-1/2 text-brand-muted"
+      aria-hidden="true"
+    />
+    <input
+      hlmInput
+      id="tracks-filter"
+      type="search"
+      placeholder="Filter tracks"
+      [value]="query()"
+      (input)="onFilterInput($event)"
+      class="border-brand-border bg-brand-surface pl-9 text-foreground"
+    />
+  </label>
+
+  @if (hasFilter()) {
+    <button
+      hlmBtn
+      type="button"
+      variant="ghost"
+      size="icon-sm"
+      class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+      aria-label="Clear track filter"
+      (click)="clearFilter()"
+    >
+      <ng-icon hlm size="sm" name="lucideX" aria-hidden="true" />
+    </button>
+  }
+</div>

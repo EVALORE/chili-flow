@@ -1,0 +1,41 @@
+<main class="mx-auto grid min-h-[calc(100vh-4rem)] w-[min(100%,72rem)] content-start gap-8 px-4 py-8">
+  <section hlmCard class="w-[min(100%,42rem)] border-brand-border bg-brand-surface">
+    <div hlmCardHeader>
+      <p hlmCardDescription>Discover</p>
+      <h1 hlmCardTitle>Find your next favorite album</h1>
+    </div>
+
+    <div hlmCardContent class="leading-7 text-brand-muted">
+      <p>
+        Explore new music, revisit albums, and keep the flow moving. More discovery features will live here as the
+        experience grows.
+      </p>
+    </div>
+  </section>
+
+  <section class="grid w-full gap-4" aria-labelledby="featured-albums-title">
+    <div class="grid gap-1">
+      <p class="text-xs font-bold tracking-normal text-brand-muted uppercase">Featured albums</p>
+      <h2 id="featured-albums-title" class="text-2xl font-extrabold text-foreground">Fresh covers</h2>
+    </div>
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(9.5rem,1fr))] gap-4">
+      @for (album of featuredAlbums; track album.id) {
+        <app-album-card [album]="album" />
+      }
+    </div>
+  </section>
+
+  <section class="grid w-full gap-4" aria-labelledby="featured-tracks-title">
+    <div class="grid gap-1">
+      <p class="text-xs font-bold tracking-normal text-brand-muted uppercase">Featured tracks</p>
+      <h2 id="featured-tracks-title" class="text-2xl font-extrabold text-foreground">New signals</h2>
+    </div>
+
+    <app-tracks
+      preset="artistSearch"
+      emptyMessage="No featured tracks match your filter."
+      [tracks]="featuredTracks"
+    />
+  </section>
+</main>

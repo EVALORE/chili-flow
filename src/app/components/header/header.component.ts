@@ -1,25 +1,18 @@
-import { Component, DestroyRef, effect, output, signal } from '@angular/core';
+import { Component, effect, output, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-import { HlmButtonImports } from '@spartan-ng/helm/button';
-import { HlmInputImports } from '@spartan-ng/helm/input';
-import { LucideCircleUserRound, LucideSearch } from '@lucide/angular';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { HlmIcon } from '@spartan-ng/helm/icon';
+import { lucideSearch, lucideCircleUserRound } from '@ng-icons/lucide';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [
-    HlmButtonImports,
-    HlmInputImports,
-    LucideCircleUserRound,
-    LucideSearch,
-    RouterLink,
-    RouterLinkActive,
-    ReactiveFormsModule,
-  ],
+  imports: [NgIcon, HlmIcon, RouterLink, RouterLinkActive, ReactiveFormsModule],
   templateUrl: './header.component.html',
+  providers: [provideIcons({ lucideSearch, lucideCircleUserRound })],
 })
 export class HeaderComponent {
   protected readonly appTitle = 'ChiliFlow';

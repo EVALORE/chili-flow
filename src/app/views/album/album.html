@@ -1,6 +1,13 @@
 @if (album()) {
   <app-album-header [album]="album()"></app-album-header>
-  <app-track-list [tracks]="album()?.tracks ?? []"></app-track-list>
-} @else {
-  <div class="p-4 text-muted-foreground animate-pulse">Loading...</div>
 }
+
+<div class="p-4">
+  <app-tracks
+    preset="album"
+    emptyMessage="This album has no tracks."
+    [tracks]="trackRows()"
+    [loading]="loading()"
+    [error]="error()"
+  />
+</div>
