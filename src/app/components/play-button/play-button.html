@@ -1,0 +1,7 @@
+<button hlmBtn [variant]="variant()" size="icon" [class]="customClass()">
+  @if (isPlaying()) {
+    <ng-icon [name]="PauseIcon" class="h-4 w-4 fill-current" />
+  } @else {
+    <ng-icon [name]="PlayIcon" class="h-4 w-4 fill-current ml-0.5" />
+  }
+</button>
