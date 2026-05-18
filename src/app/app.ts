@@ -10,4 +10,10 @@ import { HeaderComponent } from '@components/header/header.component';
 })
 export class App {
   protected readonly title = signal('ChiliFlow');
+
+  onSearch(search: string) {
+    if (search !== '') {
+      console.log('TMP handler implementation. Search text - ' + search);
+    }
+  }
 }
