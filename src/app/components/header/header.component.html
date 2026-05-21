@@ -3,35 +3,40 @@
     <img src="chiliflow_logo.png" alt="chiliflow_logo" class="h-10 w-auto" />
     <span class="font-semibold">{{ appTitle }}</span>
     <nav class="flex items-center gap-4">
-      <a routerLink="/discover" routerLinkActive="text-white" class="text-brand-muted">Discover</a>
       <a routerLink="/search" routerLinkActive="text-white" class="text-brand-muted">Search</a>
       <a routerLink="/library" routerLinkActive="text-white" class="text-brand-muted">Library</a>
       <a routerLink="/about-us" routerLinkActive="text-white" class="text-brand-muted">About Us</a>
     </nav>
   </div>
 
-  <div class="flex flex-1 justify-center">
+
+  <div class="flex flex-1 justify-center gap-2">
+    <button hlmBtn variant="outline" routerLink="/discover" class="bg-brand-surface border-0 rounded-full px-4">
+      <ng-icon name="lucideHome"></ng-icon>
+    </button>
     <div class="flex items-center rounded-full px-4 gap-2 bg-brand-surface">
-      <div>
-        <ng-icon hlm size="sm" name="lucideSearch" />
-      </div>
+      <ng-icon name="lucideSearch" />
       <input
         hlmInput
         id="search-input"
         type="text"
         placeholder="Search"
         [formControl]="searchControl"
-        class="border-0 bg-transparent outline-none shadow-none flex-1 min-w-64"
+        class="border-0 !bg-transparent outline-none shadow-none flex-1 min-w-64"
       />
     </div>
   </div>
 
   <div class="flex flex-1 justify-end">
-    <button hlmBtn variant="outline" class="bg-brand-surface rounded-full border-0">
-      <ng-icon hlm size="sm" name="lucideCircleUserRound"></ng-icon>
-      @if (isLogged()) {
-        <span class="font-semibold">Sign In</span>
-      }
-    </button>
+    @if (!isLogged()) {
+      <button hlmBtn variant="outline" class="bg-brand-surface border-0 rounded-full gap-2 px-4">
+        <ng-icon name="lucideCircleUserRound"></ng-icon>
+        Sign In
+      </button>
+    } @else {
+      <button hlmBtn variant="outline" size="icon-sm" class="bg-brand-surface border-0 rounded-full px-2">
+        <ng-icon name="lucideCircleUserRound"></ng-icon>
+      </button>
+    }
   </div>
 </header>
