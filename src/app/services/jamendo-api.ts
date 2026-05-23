@@ -19,8 +19,14 @@ export class JamendoService {
       .set('format', 'json')
       .set('id', albumId);
 
-    return this.http
-      .get<GetAlbumWithTracksResponse>(endpointUrl, { params })
-      .pipe(map((data) => data.results[0] ?? null));
+    return this.http.get<GetAlbumWithTracksResponse>(endpointUrl, { params }).pipe(
+      map((data) => {
+        const album = data.results[0];
+        if (!album) {
+          throw new Error('Album not found');
+        }
+        return album;
+      }),
+    );
   }
 }
