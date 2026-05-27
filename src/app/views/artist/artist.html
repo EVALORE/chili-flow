@@ -1,0 +1,3 @@
+@if (artist()) {
+  <app-artist-header [artist]="artist()" [albumsAmount]="albums()?.totalCount ?? 0" />
+}

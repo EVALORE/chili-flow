@@ -19,6 +19,7 @@
       "@views/*": ["./src/app/views/*"],
       "@services/*": ["./src/app/services/*"],
       "@directives/*": ["./src/app/directives/*"],
+      "@utils/*": ["./src/app/utils/*"],
       "@spartan-ng/helm/card": ["./libs/ui/card/src/index.ts"],
       "@spartan-ng/helm/utils": ["./libs/ui/utils/src/index.ts"],
       "@spartan-ng/helm/table": ["./libs/ui/table/src/index.ts"],
