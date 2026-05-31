@@ -1,16 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  signal,
-} from '@angular/core';
-import { AlbumWithTracks } from '@models/album';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { JamendoService } from '@services/jamendo-api';
 import { Tracks, TrackTableRow } from '@components/tracks';
 import { AlbumHeader } from './components/album-header/album-header';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-album',
@@ -23,32 +15,13 @@ export class Album {
 
   id = input.required<string>();
 
-  album = signal<AlbumWithTracks | null>(null);
-  loading = signal(true);
-  error = signal<string | null>(null);
-
-  constructor() {
-    effect(() => {
-      const albumId = this.id();
-
-      this.loading.set(true);
-      this.error.set(null);
-
-      this.jamendoService.getAlbumWithTracks(albumId).subscribe({
-        next: (album) => {
-          this.album.set(album);
-          this.loading.set(false);
-        },
-        error: () => {
-          this.loading.set(false);
-          this.error.set('Unable to load album.');
-        },
-      });
-    });
-  }
+  albumResource = rxResource({
+    params: () => ({ id: this.id() }),
+    stream: ({ params }) => this.jamendoService.getAlbumWithTracks(params.id),
+  });
 
   trackRows = computed<TrackTableRow[]>(() => {
-    const album = this.album();
+    const album = this.albumResource.value();
 
     if (!album) {
       return [];

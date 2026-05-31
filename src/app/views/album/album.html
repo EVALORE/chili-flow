@@ -1,20 +1,20 @@
-@if (album()) {
-  <app-album-header [album]="album()"></app-album-header>
+@if (albumResource.hasValue()) {
+  <app-album-header [album]="albumResource.value()!"></app-album-header>
   <div class="p-4">
     <app-tracks
       preset="album"
       emptyMessage="This album has no tracks."
       [tracks]="trackRows()"
-      [loading]="loading()"
-      [error]="error()"
+      [loading]="albumResource.isLoading()"
+      [error]="albumResource.error() ? 'Error loading album' : null"
     />
   </div>
-} @else if (loading()) {
+} @else if (albumResource.isLoading()) {
   <div class="flex h-[80vh] items-center justify-center text-lg font-medium text-gray-600">
     Loading album...
   </div>
-} @else if (error()) {
+} @else if (albumResource.error()) {
   <div class="flex h-[80vh] items-center justify-center text-lg font-semibold text-red-500">
-    {{ error() }}
+    An error occurred while fetching the album.
   </div>
 }
