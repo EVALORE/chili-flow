@@ -1,16 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AlbumWithTracks } from '@models/album';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { JamendoService } from '@services/jamendo-api';
 import { Tracks, TrackTableRow } from '@components/tracks';
 import { AlbumHeader } from './components/album-header/album-header';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-album',
@@ -18,16 +10,18 @@ import { AlbumHeader } from './components/album-header/album-header';
   templateUrl: './album.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Album implements OnInit {
-  private route = inject(ActivatedRoute);
+export class Album {
   private jamendoService = inject(JamendoService);
 
-  album = signal<AlbumWithTracks | null>(null);
-  loading = signal(true);
-  error = signal<string | null>(null);
+  id = input.required<string>();
+
+  albumResource = rxResource({
+    params: () => ({ id: this.id() }),
+    stream: ({ params }) => this.jamendoService.getAlbumWithTracks(params.id),
+  });
 
   trackRows = computed<TrackTableRow[]>(() => {
-    const album = this.album();
+    const album = this.albumResource.value();
 
     if (!album) {
       return [];
@@ -43,29 +37,4 @@ export class Album implements OnInit {
       position: Number(track.position || track.count) || index + 1,
     }));
   });
-
-  ngOnInit() {
-    const albumId = this.route.snapshot.paramMap.get('id');
-
-    if (!albumId) {
-      this.loading.set(false);
-      this.error.set('Album not found.');
-      return;
-    }
-
-    this.jamendoService.getAlbumWithTracks(albumId).subscribe({
-      next: (album) => {
-        this.album.set(album);
-        this.loading.set(false);
-
-        if (!album) {
-          this.error.set('Album not found.');
-        }
-      },
-      error: () => {
-        this.loading.set(false);
-        this.error.set('Unable to load album tracks.');
-      },
-    });
-  }
 }
