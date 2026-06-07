@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { Playlists } from './components/playlists/playlists';
+import { PlaylistCreateDialog } from './components/playlist-create-dialog/playlist-create-dialog';
+import { PlaylistWithTracks } from '@models/playlist';
 
 @Component({
   selector: 'app-library',
-  imports: [Playlists],
+  imports: [Playlists, PlaylistCreateDialog],
   templateUrl: './library.html',
 })
 export class Library {
-  protected readonly playlists = [
+  protected readonly playlists: PlaylistWithTracks[] = [
     {
       id: 'pl-001',
       name: 'Red Hot Chili Pipes',
