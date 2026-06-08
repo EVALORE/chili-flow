@@ -13,8 +13,8 @@
             class="grid h-full w-full place-items-center bg-brand-border text-[clamp(2rem,34cqi,4.5rem)] leading-none font-extrabold text-foreground bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-brand-primary)_55%,transparent),transparent_58%)]"
             aria-hidden="true"
           >
-          {{ artistData.name.charAt(0).toUpperCase() }}
-        </span>
+            {{ artistData.name.charAt(0).toUpperCase() }}
+          </span>
         }
       </div>
 
@@ -24,7 +24,8 @@
         </h1>
 
         <div
-          class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2 text-sm text-muted-foreground">
+          class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2 text-sm text-muted-foreground"
+        >
           @if (artistData.biography) {
             <span class="text-foreground">
               {{ artistData.biography }}
@@ -36,4 +37,3 @@
     </div>
   </div>
 }
-
