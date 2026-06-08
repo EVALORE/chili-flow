@@ -9,7 +9,6 @@ import {
   GetFullArtistInfoApiResponse,
 } from './jamendo-api.types';
 import {
-  ArtistAlbumsModel,
   ArtistAlbumsResult,
   ArtistApiResponse,
   ArtistModel,
