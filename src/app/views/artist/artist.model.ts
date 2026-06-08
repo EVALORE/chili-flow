@@ -34,7 +34,7 @@ export interface ArtistAlbumsModel {
 
 export interface ArtistAlbumsResult {
   totalCount: number;
-  albums: ArtistAlbumsModel[]
+  albums: ArtistAlbumsModel[];
 }
 
 export interface ArtistTracksModel {

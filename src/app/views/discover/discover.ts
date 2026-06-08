@@ -29,15 +29,16 @@ export class Discover implements OnInit {
   private destroyRef = inject(DestroyRef);
   private jamendoService = inject(JamendoService);
 
-  protected popularArtists = signal<ArtistModel[] | null>(null)
+  protected popularArtists = signal<ArtistModel[] | null>(null);
   protected loading = signal(true);
   protected error = signal<string | null>(null);
 
   ngOnInit(): void {
-    this.jamendoService.getMostPopularArtists('popularity_month', '12')
+    this.jamendoService
+      .getMostPopularArtists('popularity_month', '12')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: artistsResult => {
+        next: (artistsResult) => {
           switch (artistsResult.status) {
             case 'success':
               this.loading.set(false);
@@ -48,7 +49,7 @@ export class Discover implements OnInit {
               this.error.set(artistsResult.message);
               break;
           }
-        }
+        },
       });
   }
 
