@@ -6,7 +6,7 @@ import {
   ArtistTracksModel,
 } from '@views/artist/artist.model';
 import { removeHtml } from '@utils/text-utility';
-import { ArtistAlbumsApiResponse, GetArtistAlbumsApiResponse } from '@services/jamendo-api.types';
+import { ArtistAlbumsApiResponse } from '@services/jamendo-api.types';
 
 export function toArtistModel(a: ArtistApiResponse): ArtistModel {
   return {

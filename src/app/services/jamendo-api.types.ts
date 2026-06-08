@@ -51,7 +51,6 @@ export interface GetFullArtistInfoApiResponse {
   results: ArtistApiResponse[];
 }
 
-
 export interface GetArtistAlbumsApiResponse {
   headers: JamendoHeadersApiResponse;
   results: ArtistAlbumsApiResponse[];
