@@ -1,9 +1,6 @@
 import { AlbumWithTracks } from '@models/album';
 
-import {
-  ArtistApiResponse,
-  ArtistTracksApiResponse,
-} from '@views/artist/artist.model';
+import { ArtistApiResponse, ArtistTracksApiResponse } from '@views/artist/artist.model';
 
 export interface JamendoHeadersApiResponse {
   status: string;
@@ -20,12 +17,10 @@ export interface GetAlbumWithTracksResponse {
   results: AlbumWithTracks[];
 }
 
-
 export interface GetFullArtistInfoApiResponse {
   headers: JamendoHeadersApiResponse;
   results: ArtistApiResponse[];
 }
-
 
 export interface GetArtistAlbumsApiResponse {
   headers: JamendoHeadersApiResponse;

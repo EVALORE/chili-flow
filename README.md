@@ -31,3 +31,9 @@ npm start
 npm run build
 npm test
 ```
+
+## Deployment
+
+The application is deployed here:
+
+https://chili-flow.vercel.app/discover

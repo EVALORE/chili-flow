@@ -8,7 +8,6 @@
   "singleAttributePerLine": false,
   "useTabs": false,
   "trailingComma": "all",
-  "insert_new_line": true,
   "arrowParens": "always",
   "endOfLine": "lf",
   "overrides": [
