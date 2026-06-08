@@ -11,6 +11,14 @@ export const routes: Routes = [
     loadComponent: () => import('@views/album'),
   },
   {
+    path: 'library',
+    loadComponent: () => import('@views/library'),
+  },
+  {
+    path: 'artist/:id',
+    loadComponent: () => import('@views/artist'),
+  },
+  {
     path: '**',
     loadComponent: () => import('@views/not-found'),
   },

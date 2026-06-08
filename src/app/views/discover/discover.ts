@@ -1,15 +1,53 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { HlmCardImports } from '@spartan-ng/helm/card';
 import { AlbumCard, AlbumCardData } from '@components/album-card';
 import { Tracks, TrackTableRow } from '@components/tracks';
+import { ArtistModel } from '@views/artist/artist.model';
+import { ArtistCard } from '@components/artist-card';
+import { JamendoService } from '@services/jamendo-api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-discover',
-  imports: [AlbumCard, HlmCardImports, Tracks],
+  imports: [AlbumCard, HlmCardImports, Tracks, ArtistCard],
   templateUrl: './discover.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Discover {
+export class Discover implements OnInit {
+  private destroyRef = inject(DestroyRef);
+  private jamendoService = inject(JamendoService);
+
+  protected popularArtists = signal<ArtistModel[] | null>(null);
+  protected loading = signal(true);
+  protected error = signal<string | null>(null);
+
+  ngOnInit(): void {
+    this.jamendoService
+      .getMostPopularArtists('popularity_month', '12')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (artistsResult) => {
+          switch (artistsResult.status) {
+            case 'success':
+              this.loading.set(false);
+              this.popularArtists.set(artistsResult.data ?? null);
+              break;
+            case 'failed':
+              this.loading.set(false);
+              this.error.set(artistsResult.message);
+              break;
+          }
+        },
+      });
+  }
+
   protected readonly featuredAlbums: AlbumCardData[] = [
     {
       id: '103026',

@@ -60,6 +60,7 @@ describe('Album', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(Album);
+    fixture.componentRef.setInput('id', 'album-1');
     component = fixture.componentInstance;
     fixture.detectChanges();
     await fixture.whenStable();

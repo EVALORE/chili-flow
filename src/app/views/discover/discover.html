@@ -15,6 +15,31 @@
     </div>
   </section>
 
+  <section class="grid w-full gap-4" aria-labelledby="popular-artists-title">
+    <div class="grid gap-1">
+      <p class="text-xs font-bold tracking-normal text-brand-muted uppercase">Last month</p>
+      <h2 id="popular-artists-title" class="text-2xl font-extrabold text-foreground">
+        Popular artists
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(9.5rem,1fr))] gap-4">
+      @if (loading()) {
+        <!--Need to discuss about a solution-->
+        <!-- TODO: skeleton cards-->
+      } @else if (error()) {
+        <!--TMP solution-->
+        <p class="text-brand-muted">{{ error() }}</p>
+      } @else {
+        @for (artist of popularArtists(); track artist.id) {
+          <app-artist-card [artist]="artist" />
+        } @empty {
+          <p class="text-brand-muted">No popular artists right now.</p>
+        }
+      }
+    </div>
+  </section>
+
   <section class="grid w-full gap-4" aria-labelledby="featured-albums-title">
     <div class="grid gap-1">
       <p class="text-xs font-bold tracking-normal text-brand-muted uppercase">Featured albums</p>

@@ -1,0 +1,43 @@
+<hlm-dialog-content class="sm:max-w-[425px] border-0" *hlmDialogPortal="let ctx">
+  <hlm-dialog-header>
+    <h3 hlmDialogTitle>{{ mode() === 'create' ? 'Create a new playlist' : 'Edit a playlist' }}</h3>
+    <p hlmDialogDescription>
+      Enter a name and optional description for your
+      {{ mode() === 'create' ? 'new' : 'existing' }} playlist.
+    </p>
+  </hlm-dialog-header>
+
+  <form (submit)="submitForm(ctx)" class="grid gap-4 py-4">
+    <div class="grid grid-cols-4 items-center gap-4">
+      <label hlmLabel for="name" class="text-right">Name</label>
+      <input
+        hlmInput
+        id="name"
+        [formField]="PlaylistForm.name"
+        class="col-span-3"
+        placeholder="My awesome playlist"
+      />
+    </div>
+    <div class="grid grid-cols-4 items-center gap-4">
+      <label hlmLabel for="description" class="text-right">Description</label>
+      <input
+        hlmInput
+        id="description"
+        [formField]="PlaylistForm.description"
+        class="col-span-3"
+        placeholder="Optional outline of the mood"
+      />
+    </div>
+
+    <hlm-dialog-footer>
+      <button
+        hlmBtn
+        type="submit"
+        class="bg-brand-border rounded-full"
+        [disabled]="PlaylistForm().invalid()"
+      >
+        {{ mode() === 'create' ? 'Create' : 'Save' }}
+      </button>
+    </hlm-dialog-footer>
+  </form>
+</hlm-dialog-content>
