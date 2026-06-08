@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { PlaylistWithTracks } from '@models/playlist';
 import { DurationPipe } from '@pipes/duration-pipe';
 import { TotalDurationPipe } from '@pipes/total-duration.pipe';
@@ -18,7 +18,6 @@ import { HlmDialogImports } from '@spartan-ng/helm/dialog';
     }),
   ],
   templateUrl: './playlist-item.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaylistItem {
   playlist = input.required<PlaylistWithTracks>();

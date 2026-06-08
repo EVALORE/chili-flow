@@ -13,7 +13,7 @@
       <input
         hlmInput
         id="name"
-        [formField]="CreatePlaylistForm.name"
+        [formField]="PlaylistForm.name"
         class="col-span-3"
         placeholder="My awesome playlist"
       />
@@ -23,7 +23,7 @@
       <input
         hlmInput
         id="description"
-        [formField]="CreatePlaylistForm.description"
+        [formField]="PlaylistForm.description"
         class="col-span-3"
         placeholder="Optional outline of the mood"
       />
@@ -34,7 +34,7 @@
         hlmBtn
         type="submit"
         class="bg-brand-border rounded-full"
-        [disabled]="CreatePlaylistForm().invalid()"
+        [disabled]="PlaylistForm().invalid()"
       >
         {{ mode() === 'create' ? 'Create' : 'Save' }}
       </button>

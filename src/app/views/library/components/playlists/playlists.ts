@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { PlaylistItem } from '../playlist-item/playlist-item';
 import { PlaylistWithTracks } from '@models/playlist';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -16,7 +16,6 @@ import { PlaylistEditDialog } from '../playlist-edit-dialog/playlist-edit-dialog
     }),
   ],
   templateUrl: './playlists.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Playlists {
   loading = input(false);
