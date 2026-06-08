@@ -1,8 +1,25 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { AlbumWithTracks } from '@models/album';
-import { map, Observable } from 'rxjs';
-import { GetAlbumWithTracksResponse } from './jamendo-api.types';
+import { catchError, map, Observable, of } from 'rxjs';
+import {
+  GetAlbumWithTracksResponse,
+  GetArtistAlbumsApiResponse,
+  GetArtistTracksApiResponse,
+  GetFullArtistInfoApiResponse,
+} from './jamendo-api.types';
+import {
+  ArtistAlbumsResult,
+  ArtistApiResponse,
+  ArtistModel,
+  ArtistTracksModel,
+} from '@views/artist/artist.model';
+import {
+  toArtistAlbumsModel,
+  toArtistModel,
+  toArtistTracksModel,
+} from '@views/artist/artist.mapper';
+import { Result } from '@models/result';
 
 @Injectable({
   providedIn: 'root',
