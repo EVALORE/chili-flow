@@ -3,7 +3,6 @@ import { Injectable, inject } from '@angular/core';
 import { AlbumWithTracks } from '@models/album';
 import { catchError, map, Observable, of } from 'rxjs';
 import {
-  GetAlbumWithTracksResponse,
   GetArtistAlbumsApiResponse,
   GetArtistTracksApiResponse,
   GetFullArtistInfoApiResponse,
@@ -20,39 +19,24 @@ import {
   toArtistTracksModel,
 } from '@views/artist/artist.mapper';
 import { Result } from '@models/result';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JamendoService {
-  private baseUrl = 'https://api.jamendo.com/v3.0';
-  private clientId = 'a171a574';
+  private baseUrl = environment.apiBaseUrl;
   private http = inject(HttpClient);
 
-  getAlbumWithTracks(albumId: string): Observable<AlbumWithTracks | null> {
-    const endpointUrl = `${this.baseUrl}/albums/tracks/`;
-    const params = new HttpParams()
-      .set('client_id', this.clientId)
-      .set('format', 'json')
-      .set('id', albumId);
+  getAlbumWithTracks(albumId: string): Observable<AlbumWithTracks> {
+    const endpointUrl = `${this.baseUrl}/catalog/albums/${albumId}/tracks/`;
 
-    return this.http.get<GetAlbumWithTracksResponse>(endpointUrl, { params }).pipe(
-      map((data) => {
-        const album = data.results[0];
-        if (!album) {
-          throw new Error('Album not found');
-        }
-        return album;
-      }),
-    );
+    return this.http.get<AlbumWithTracks>(endpointUrl);
   }
 
   getFullArtistInfo(artistId: string): Observable<Result<ArtistModel>> {
-    const endpointUrl = `${this.baseUrl}/artists/musicinfo`;
-    const params = new HttpParams()
-      .set('client_id', this.clientId)
-      .set('format', 'json')
-      .set('id', artistId);
+    const endpointUrl = `${this.baseUrl}/catalog/artists/musicinfo`;
+    const params = new HttpParams().set('id', artistId);
 
     return this.http.get<GetFullArtistInfoApiResponse>(endpointUrl, { params }).pipe(
       map((data): Result<ArtistModel> => {
@@ -72,12 +56,8 @@ export class JamendoService {
     order: 'popularity_total' | 'popularity_month' | 'popularity_week' = 'popularity_total',
     limit?: string,
   ): Observable<Result<ArtistModel[]>> {
-    const endpointUrl = `${this.baseUrl}/artists/`;
-    const params = new HttpParams()
-      .set('client_id', this.clientId)
-      .set('format', 'json')
-      .set('limit', limit ?? '10')
-      .set('order', order);
+    const endpointUrl = `${this.baseUrl}/catalog/artists/`;
+    const params = new HttpParams().set('limit', limit ?? '10').set('order', order);
 
     return this.http.get<GetFullArtistInfoApiResponse>(endpointUrl, { params }).pipe(
       map((data): Result<ArtistModel[]> => {
@@ -97,10 +77,8 @@ export class JamendoService {
   }
 
   getArtistAlbums(artistId: string, limit?: string): Observable<Result<ArtistAlbumsResult>> {
-    const endpointUrl = `${this.baseUrl}/albums`;
+    const endpointUrl = `${this.baseUrl}/catalog/albums`;
     const params = new HttpParams()
-      .set('client_id', this.clientId)
-      .set('format', 'json')
       .set('limit', limit ?? 10)
       .set('fullcount', true)
       .set('artist_id', artistId);
@@ -126,11 +104,8 @@ export class JamendoService {
   }
 
   getArtistTracks(artistId: string): Observable<Result<ArtistTracksModel>> {
-    const endpointUrl = `${this.baseUrl}/artists/tracks`;
-    const params = new HttpParams()
-      .set('client_id', this.clientId)
-      .set('format', 'json')
-      .set('id', artistId);
+    const endpointUrl = `${this.baseUrl}/catalog/artists/tracks`;
+    const params = new HttpParams().set('id', artistId);
 
     return this.http.get<GetArtistTracksApiResponse>(endpointUrl, { params }).pipe(
       map((data): Result<ArtistTracksModel> => {
