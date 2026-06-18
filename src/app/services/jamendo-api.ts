@@ -6,6 +6,7 @@ import {
   GetArtistAlbumsApiResponse,
   GetArtistTracksApiResponse,
   GetFullArtistInfoApiResponse,
+  Playlist,
 } from './jamendo-api.types';
 import {
   ArtistAlbumsResult,
@@ -32,6 +33,21 @@ export class JamendoService {
     const endpointUrl = `${this.baseUrl}/catalog/albums/${albumId}/tracks/`;
 
     return this.http.get<AlbumWithTracks>(endpointUrl);
+  }
+
+  createPlaylist(data: { name: string; description: string }): Observable<Playlist> {
+    const endpointUrl = `${this.baseUrl}/playlists/`;
+
+    return this.http.post<Playlist>(endpointUrl, data);
+  }
+
+  updatePlaylist(
+    playlistId: string,
+    data: { name: string; description: string },
+  ): Observable<Playlist> {
+    const endpointUrl = `${this.baseUrl}/playlists/${playlistId}`;
+
+    return this.http.put<Playlist>(endpointUrl, data);
   }
 
   getFullArtistInfo(artistId: string): Observable<Result<ArtistModel>> {

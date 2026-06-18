@@ -14,7 +14,7 @@ export interface JamendoHeadersApiResponse {
 
 export interface GetAlbumWithTracksResponse {
   headers: JamendoHeadersApiResponse;
-  results: AlbumWithTracks[];
+  results: AlbumWithTracks;
 }
 
 export interface GetFullArtistInfoApiResponse {
@@ -43,4 +43,10 @@ export interface ArtistAlbumsApiResponse {
 export interface GetArtistTracksApiResponse {
   headers: JamendoHeadersApiResponse;
   results: ArtistTracksApiResponse[];
+}
+
+export interface Playlist {
+  id: string;
+  name: string;
+  description: string;
 }
