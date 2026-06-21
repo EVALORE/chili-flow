@@ -6,7 +6,6 @@ import {
   GetArtistAlbumsApiResponse,
   GetArtistTracksApiResponse,
   GetFullArtistInfoApiResponse,
-  Playlist,
 } from './jamendo-api.types';
 import {
   ArtistAlbumsResult,
@@ -21,6 +20,7 @@ import {
 } from '@views/artist/artist.mapper';
 import { Result } from '@models/result';
 import { environment } from '../../environments/environment';
+import { PlaylistWithTracks } from '@models/playlist';
 
 @Injectable({
   providedIn: 'root',
@@ -35,19 +35,31 @@ export class JamendoService {
     return this.http.get<AlbumWithTracks>(endpointUrl);
   }
 
-  createPlaylist(data: { name: string; description: string }): Observable<Playlist> {
+  getPlaylists(): Observable<PlaylistWithTracks[]> {
+    const endpointUrl = `${this.baseUrl}/playlists`;
+
+    return this.http.get<PlaylistWithTracks[]>(endpointUrl);
+  }
+
+  createPlaylist(data: { name: string; description: string }): Observable<PlaylistWithTracks> {
     const endpointUrl = `${this.baseUrl}/playlists/`;
 
-    return this.http.post<Playlist>(endpointUrl, data);
+    return this.http.post<PlaylistWithTracks>(endpointUrl, data);
   }
 
   updatePlaylist(
     playlistId: string,
     data: { name: string; description: string },
-  ): Observable<Playlist> {
+  ): Observable<PlaylistWithTracks> {
     const endpointUrl = `${this.baseUrl}/playlists/${playlistId}`;
 
-    return this.http.put<Playlist>(endpointUrl, data);
+    return this.http.put<PlaylistWithTracks>(endpointUrl, data);
+  }
+
+  deletePlaylist(playlistId: string): Observable<void> {
+    const endpointUrl = `${this.baseUrl}/playlists/${playlistId}`;
+
+    return this.http.delete<void>(endpointUrl);
   }
 
   getFullArtistInfo(artistId: string): Observable<Result<ArtistModel>> {

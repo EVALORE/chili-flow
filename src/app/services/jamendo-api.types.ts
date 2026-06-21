@@ -45,8 +45,4 @@ export interface GetArtistTracksApiResponse {
   results: ArtistTracksApiResponse[];
 }
 
-export interface Playlist {
-  id: string;
-  name: string;
-  description: string;
-}
+

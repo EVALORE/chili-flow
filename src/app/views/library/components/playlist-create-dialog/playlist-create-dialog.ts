@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, output } from '@angular/core';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmDialogImports } from '@spartan-ng/helm/dialog';
 import { HlmIcon } from '@spartan-ng/helm/icon';
@@ -21,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class PlaylistCreateDialog {
   private jamendoService = inject(JamendoService);
   private destroyRef = inject(DestroyRef);
+  created = output<void>();
 
   createPlaylist(event: PlaylistDialogSubmitEvent): void {
     this.jamendoService
@@ -29,6 +30,7 @@ export class PlaylistCreateDialog {
       .subscribe({
         next: () => {
           event.dialogRef.close();
+          this.created.emit();
         },
         error: (error) => {
           console.error('Failed to create playlist', error);

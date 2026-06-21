@@ -17,6 +17,7 @@ export class PlaylistEditDialog {
   playlist = input<PlaylistWithTracks | null>(null);
   state = computed(() => (this.playlist() ? 'open' : 'closed'));
   closed = output<void>();
+  edited = output<void>();
 
   updatePlaylist(event: PlaylistDialogSubmitEvent): void {
     const currentPlaylist = this.playlist();
@@ -31,6 +32,7 @@ export class PlaylistEditDialog {
       .subscribe({
         next: () => {
           event.dialogRef.close();
+          this.edited.emit();
         },
         error: (error) => {
           console.error('Failed to update playlist', error);

@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Playlists } from './components/playlists/playlists';
 import { PlaylistCreateDialog } from './components/playlist-create-dialog/playlist-create-dialog';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { JamendoService } from '@services/jamendo-api';
 import { PlaylistWithTracks } from '@models/playlist';
 
 @Component({
@@ -9,138 +11,15 @@ import { PlaylistWithTracks } from '@models/playlist';
   templateUrl: './library.html',
 })
 export class Library {
-  protected readonly playlists: PlaylistWithTracks[] = [
-    {
-      id: 'pl-001',
-      name: 'Red Hot Chili Pipes',
-      description: 'High-energy open-source funk rock and stream configurations.',
-      creationdate: '2026-01-15',
-      user_id: 'usr-9921',
-      user_name: 'Lena',
-      tracks: [
-        {
-          source: 'jamendo',
-          sourceId: 'trk-101',
-          title: 'The Power of Equality',
-          artist: 'The Power of Equality',
-          artistId: 'art-101',
-          album: 'Red Hot Chili Pipes',
-          albumId: 'alb-001',
-          position: 1,
-          duration: 243,
-          coverUrl: 'https://example.com/cover.jpg',
-          audioUrl: 'https://example.com/audio/power-of-equality.mp3',
-          downloadUrl: 'https://example.com/audio/download/power-of-equality.mp3',
-          shareUrl: null,
-          licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-          audiodownloadAllowed: true,
-        },
-        {
-          source: 'jamendo',
-          sourceId: 'trk-102',
-          title: 'If You Have to Ask',
-          artist: 'If You Have to Ask',
-          artistId: 'art-102',
-          album: 'Red Hot Chili Pipes',
-          albumId: 'alb-001',
-          position: 2,
-          duration: 217,
-          coverUrl: 'https://example.com/cover.jpg',
-          audioUrl: 'https://example.com/audio/if-you-have-to-ask.mp3',
-          downloadUrl: 'https://example.com/audio/download/if-you-have-to-ask.mp3',
-          shareUrl: null,
-          licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
-          audiodownloadAllowed: true,
-        },
-        {
-          source: 'jamendo',
-          sourceId: 'trk-103',
-          title: 'Breaking the Girl',
-          artist: 'Breaking the Girl',
-          artistId: 'art-103',
-          album: 'Red Hot Chili Pipes',
-          albumId: 'alb-001',
-          position: 3,
-          duration: 295,
-          coverUrl: 'https://example.com/cover.jpg',
-          audioUrl: 'https://example.com/audio/breaking-the-girl.mp3',
-          downloadUrl: 'https://example.com/audio/download/breaking-the-girl.mp3',
-          shareUrl: null,
-          licenseUrl: 'https://creativecommons.org/licenses/by-nc/4.0/',
-          audiodownloadAllowed: true,
-        },
-      ],
-    },
-    {
-      id: 'pl-002',
-      name: 'Zoneless Grooves',
-      description: 'Pure asynchronous background loops optimized for deep focus.',
-      creationdate: '2026-02-20',
-      user_id: 'usr-9921',
-      user_name: 'Lena',
-      tracks: [
-        {
-          source: 'jamendo',
-          sourceId: 'trk-201',
-          title: 'Around the World',
-          artist: 'Around the World',
-          artistId: 'art-201',
-          album: 'Zoneless Grooves',
-          albumId: 'alb-002',
-          position: 1,
-          duration: 238,
-          coverUrl: 'https://example.com/cover.jpg',
-          audioUrl: 'https://example.com/audio/around-the-world.mp3',
-          downloadUrl: '',
-          shareUrl: null,
-          licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
-          audiodownloadAllowed: false,
-        },
-        {
-          source: 'jamendo',
-          sourceId: 'trk-202',
-          title: 'Parallel Universe',
-          artist: 'Parallel Universe',
-          artistId: 'art-202',
-          album: 'Zoneless Grooves',
-          albumId: 'alb-002',
-          position: 2,
-          duration: 270,
-          coverUrl: 'https://example.com/cover.jpg',
-          audioUrl: 'https://example.com/audio/parallel-universe.mp3',
-          downloadUrl: '',
-          shareUrl: null,
-          licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
-          audiodownloadAllowed: false,
-        },
-      ],
-    },
-    {
-      id: 'pl-003',
-      name: 'OnPush Harmonies',
-      description: 'Predictable, immutable frequencies tailored for structural stability.',
-      creationdate: '2026-03-05',
-      user_id: 'usr-0412',
-      user_name: 'Alex',
-      tracks: [
-        {
-          source: 'jamendo',
-          sourceId: 'trk-301',
-          title: 'By the Way',
-          artist: 'By the Way',
-          artistId: 'art-301',
-          album: 'OnPush Harmonies',
-          albumId: 'alb-003',
-          position: 1,
-          duration: 217,
-          coverUrl: 'https://example.com/cover.jpg',
-          audioUrl: 'https://example.com/audio/by-the-way.mp3',
-          downloadUrl: 'https://example.com/audio/download/by-the-way.mp3',
-          shareUrl: null,
-          licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-          audiodownloadAllowed: true,
-        },
-      ],
-    },
-  ];
+  private jamendoService = inject(JamendoService);
+
+  playlistsResource = rxResource({
+    stream: () => this.jamendoService.getPlaylists(),
+  });
+
+  playlists = computed<PlaylistWithTracks[]>(() => this.playlistsResource.value() || []);
+
+  reloadPlaylists() {
+    this.playlistsResource.reload();
+  }
 }
