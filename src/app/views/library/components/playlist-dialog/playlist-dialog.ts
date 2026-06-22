@@ -51,6 +51,7 @@ export class PlaylistDialog {
       description: '',
     };
   });
+
   protected PlaylistForm = form(this.formState, PlaylistSchema);
 
   submitForm(dialogRef: BrnDialogRef, event: Event): void {
@@ -64,5 +65,7 @@ export class PlaylistDialog {
       data: { ...this.formState() },
       dialogRef,
     });
+
+    this.formState.set({ name: '', description: '' });
   }
 }
