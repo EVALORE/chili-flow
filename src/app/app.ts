@@ -7,6 +7,9 @@ import { HeaderComponent } from '@components/header';
   selector: 'app-root',
   imports: [HeaderComponent, RouterOutlet],
   templateUrl: './app.html',
+  host: {
+    class: 'block min-h-svh bg-background text-foreground',
+  },
 })
 export class App {
   protected readonly title = signal('ChiliFlow');

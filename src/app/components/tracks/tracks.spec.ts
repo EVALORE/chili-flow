@@ -130,7 +130,7 @@ describe('Tracks', () => {
     playButton.click();
     fixture.detectChanges();
 
-    expect(currentRow.classList.contains('bg-brand-secondary/10')).toBe(true);
+    expect(currentRow.classList.contains('bg-primary/10')).toBe(true);
     expect(currentRow.getAttribute('aria-current')).toBe('true');
     expect(playSpy).toHaveBeenCalledWith('alpha');
     subscription.unsubscribe();

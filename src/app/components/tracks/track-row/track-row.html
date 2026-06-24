@@ -23,13 +23,13 @@
   <td hlmTableCell class="flex min-w-72 items-center gap-3">
     @if (track().coverUrl) {
       <img
-        class="h-11 w-11 flex-none rounded-sm bg-brand-border object-cover"
+        class="h-11 w-11 flex-none rounded-sm bg-muted object-cover"
         [src]="track().coverUrl"
         [alt]="track().album || track().title"
       />
     } @else {
       <span
-        class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-sm bg-brand-border font-bold text-foreground uppercase"
+        class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-sm bg-muted font-bold text-foreground uppercase"
         aria-hidden="true"
       >
         {{ track().title.charAt(0) }}
@@ -46,7 +46,7 @@
         </span>
         @if (track().explicit) {
           <span
-            class="inline-flex h-4 w-4 items-center justify-center rounded-[3px] bg-brand-muted text-[0.625rem] font-extrabold text-brand-tertiary"
+            class="inline-flex h-4 w-4 items-center justify-center rounded-[3px] bg-muted-foreground text-[0.625rem] font-extrabold text-background"
             aria-label="Explicit"
           >
             E
@@ -55,30 +55,30 @@
       </span>
 
       @if (artistsText()) {
-        <span class="text-brand-muted">{{ artistsText() }}</span>
+        <span class="text-muted-foreground">{{ artistsText() }}</span>
       }
     </span>
   </td>
 }
 
 @if (isColumnVisible('album')) {
-  <td hlmTableCell class="text-brand-muted">
+  <td hlmTableCell class="text-muted-foreground">
     {{ track().album || '-' }}
   </td>
 }
 
 @if (isColumnVisible('date')) {
-  <td hlmTableCell class="text-brand-muted">
+  <td hlmTableCell class="text-muted-foreground">
     @if (track().dateAdded) {
       {{ track().dateAdded | date: 'mediumDate' }}
     } @else {
-      <span class="text-brand-muted">-</span>
+      <span class="text-muted-foreground">-</span>
     }
   </td>
 }
 
 @if (isColumnVisible('duration')) {
-  <td hlmTableCell class="w-26 text-right font-semibold text-brand-muted tabular-nums">
+  <td hlmTableCell class="w-26 text-right font-semibold text-muted-foreground tabular-nums">
     {{ track().durationSeconds | duration }}
   </td>
 }
