@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   template: `
-    <main class="flex items-center justify-center">
+    <main class="flex min-h-svh w-full items-center justify-center px-4 py-10">
       <section aria-label="Authorization" class="w-full max-w-md">
         <router-outlet />
       </section>
@@ -12,7 +12,7 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'block w-full',
+    class: 'block min-h-svh',
   },
 })
 export class AuthorizationLayout {}
