@@ -20,6 +20,10 @@
       "@services/*": ["./src/app/services/*"],
       "@directives/*": ["./src/app/directives/*"],
       "@utils/*": ["./src/app/utils/*"],
+      "@layout/*": ["./src/app/layout/*"],
+      "@interceptors": ["./src/app/interceptors"],
+      "@interceptors/*": ["./src/app/interceptors/*"],
+
       "@spartan-ng/helm/card": ["./libs/ui/card/src/index.ts"],
       "@spartan-ng/helm/utils": ["./libs/ui/utils/src/index.ts"],
       "@spartan-ng/helm/table": ["./libs/ui/table/src/index.ts"],

@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ApiService } from '@services/api.service';
+import { BackendEndpoints } from '@services/backend-endpoints';
 import { AuthResponse, LoginRequest, RegisterRequest } from './auth.model';
 
 @Injectable({ providedIn: 'root' })
-export class AuthHttp {
+export class AuthApi {
   private readonly _http = inject(HttpClient);
-  private readonly _api = inject(ApiService);
+  private readonly _api = inject(BackendEndpoints);
 
   register(body: RegisterRequest) {
     return this._http.post<AuthResponse>(this._api.register(), body);

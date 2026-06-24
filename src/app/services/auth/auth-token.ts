@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
-export class Token {
+export class AuthToken {
   private accessToken: string | null = null;
 
   set(token: string): void {

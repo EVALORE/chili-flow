@@ -8,9 +8,9 @@ import {
   withState,
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { Token } from './token.service';
+import { AuthToken } from './auth-token';
 import { AuthResponse, AuthState, LoginRequest, RegisterRequest } from './auth.model';
-import { AuthHttp } from './auth-http.service';
+import { AuthApi } from './auth-api';
 import { exhaustMap, pipe, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
 
@@ -24,8 +24,8 @@ export const AuthStore = signalStore(
   }),
 
   withProps(() => ({
-    http: inject(AuthHttp),
-    token: inject(Token),
+    http: inject(AuthApi),
+    token: inject(AuthToken),
   })),
 
   withComputed(({ user, loading }) => ({

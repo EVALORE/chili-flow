@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class ApiService {
+export class BackendEndpoints {
+  private readonly apiUrl = environment.apiUrl;
+
   register() {
-    return '/auth/register';
+    return `${this.apiUrl}/auth/register`;
   }
 
   login() {
-    return '/auth/login';
+    return `${this.apiUrl}/auth/login`;
   }
 
   playlists() {
-    return '/playlists';
+    return `${this.apiUrl}/${this.apiUrl}/playlists`;
   }
 
   playlist(playlistId: string) {
@@ -19,7 +22,7 @@ export class ApiService {
   }
 
   tracks(playlistId: string) {
-    return `${this.playlist(playlistId)}/tracks`;
+    return `${this.apiUrl}/${this.playlist(playlistId)}/tracks`;
   }
 
   track(playlistId: string, trackId: string) {
@@ -27,6 +30,6 @@ export class ApiService {
   }
 
   recentlyPlayed() {
-    return '/recently-played';
+    return `${this.apiUrl}/recently-played`;
   }
 }
