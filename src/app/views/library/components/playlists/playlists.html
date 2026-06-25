@@ -6,19 +6,27 @@
       </caption>
       <thead hlmTableHeader>
         <tr hlmTableRow>
-          <th hlmTableHead scope="col" class="text-xs uppercase text-brand-muted">Name</th>
-          <th hlmTableHead scope="col" class="text-xs uppercase text-brand-muted">Track count</th>
-          <th hlmTableHead class="w-26 text-right text-xs uppercase text-brand-muted" scope="col">
+          <th hlmTableHead scope="col" class="text-xs uppercase text-muted-foreground">Name</th>
+          <th hlmTableHead scope="col" class="text-xs uppercase text-muted-foreground">
+            Track count
+          </th>
+          <th
+            hlmTableHead
+            class="w-26 text-right text-xs uppercase text-muted-foreground"
+            scope="col"
+          >
             <ng-icon hlm size="sm" name="lucideClock" aria-hidden="true" />
             <span class="sr-only">Duration</span>
           </th>
-          <th hlmTableHead scope="col" class="text-xs uppercase text-brand-muted"></th>
+          <th hlmTableHead scope="col" class="text-xs uppercase text-muted-foreground"></th>
         </tr>
       </thead>
       <tbody hlmTableBody>
         @if (loading()) {
           <tr hlmTableRow>
-            <td hlmTableCell class="h-20 text-center text-brand-muted">Loading playlists...</td>
+            <td hlmTableCell class="h-20 text-center text-muted-foreground">
+              Loading playlists...
+            </td>
           </tr>
         } @else if (error()) {
           <tr hlmTableRow>
@@ -28,18 +36,32 @@
           </tr>
         } @else if (playlists().length === 0) {
           <tr hlmTableRow>
-            <td hlmTableCell class="h-20 text-center text-brand-muted" colspan="4">
+            <td hlmTableCell class="h-20 text-center text-muted-foreground" colspan="4">
               No playlists found.
             </td>
           </tr>
         } @else {
           @for (playlist of playlists(); track playlist.id) {
-            <tr app-playlist-item [playlist]="playlist" (edit)="editPlaylist($event)"></tr>
+            <tr
+              app-playlist-item
+              [playlist]="playlist"
+              (edit)="editPlaylist($event)"
+              (delete)="deletePlaylist($event)"
+            ></tr>
           }
         }
       </tbody>
     </table>
   </div>
 
-  <app-playlist-edit-dialog [playlist]="editingPlaylist()" (closed)="cancelEditPlaylist()" />
+  <app-playlist-edit-dialog
+    [playlist]="editingPlaylist()"
+    (closed)="cancelEditPlaylist()"
+    (edited)="onPlaylistEdited()"
+  />
+  <app-playlist-delete-dialog
+    [playlist]="deletingPlaylist()"
+    (closed)="cancelDeletePlaylist()"
+    (deleted)="onPlaylistDeleted()"
+  />
 </section>

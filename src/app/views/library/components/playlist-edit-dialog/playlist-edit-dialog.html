@@ -1,5 +1,9 @@
 <hlm-dialog [state]="state()" (closed)="closed.emit()">
   @if (playlist()) {
-    <app-playlist-dialog mode="edit" [playlist]="playlist()"></app-playlist-dialog>
+    <app-playlist-dialog
+      mode="edit"
+      [playlist]="playlist()"
+      (submitted)="updatePlaylist($event)"
+    ></app-playlist-dialog>
   }
 </hlm-dialog>

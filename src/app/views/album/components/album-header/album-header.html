@@ -2,8 +2,8 @@
   <div hlmCardContent class="flex flex-col sm:flex-row gap-6 items-center sm:items-end p-0">
     <div hlmAvatar class="w-40 h-40 rounded-lg shadow-xl border border-border">
       <img
-        [src]="album()?.image"
-        [alt]="album()?.name"
+        [src]="album()?.coverUrl"
+        [alt]="album()?.title"
         class="w-full h-full object-cover rounded-sm"
       />
     </div>
@@ -12,17 +12,17 @@
       <span class="text-xs font-bold tracking-widest uppercase text-muted-foreground"> Album </span>
 
       <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight scroll-m-20 text-foreground">
-        {{ album()?.name }}
+        {{ album()?.title }}
       </h1>
 
       <div
         class="flex flex-wrap items-center justify-center sm:justify-start gap-2 pt-2 text-sm text-muted-foreground"
       >
         <span class="font-semibold text-foreground hover:underline cursor-pointer">
-          {{ album()?.artist_name }}
+          {{ album()?.artist }}
         </span>
         <span class="text-muted-foreground/60">•</span>
-        <span>Released: {{ album()?.releasedate }}</span>
+        <span>Released: {{ album()?.releaseDate }}</span>
         <span class="text-muted-foreground/60">•</span>
         <span>{{ album()?.tracks | totalDuration | duration }}</span>
       </div>
