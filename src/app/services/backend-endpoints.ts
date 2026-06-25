@@ -33,4 +33,3 @@ export class BackendEndpoints {
     return `${this.apiUrl}/recently-played`;
   }
 }
-
