@@ -1,4 +1,4 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -8,6 +8,7 @@ import { lucideSearch, lucideCircleUserRound, lucideHome } from '@ng-icons/lucid
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { HlmInputImports } from '@spartan-ng/helm/input';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { AuthStore } from '@services/auth/auth.store';
 
 @Component({
   selector: 'app-header',
@@ -23,9 +24,8 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
   providers: [provideIcons({ lucideSearch, lucideCircleUserRound, lucideHome })],
 })
 export class Header {
-  protected readonly appTitle = 'ChiliFlow';
-  //TMP solution
-  protected isLogged = signal<boolean>(false);
+  readonly authStore = inject(AuthStore);
+
   protected searchControl = new FormControl<string>('');
   searchChange = output<string>();
 

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { getSafeAuthReturnUrl } from '@services/auth/auth-return-url';
 import { AuthStore } from '@services/auth/auth.store';
 import { HlmAlertImports } from '@spartan-ng/helm/alert';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
@@ -66,17 +67,23 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
       </div>
 
       <hlm-card-footer>
-        <button
-          hlmBtn
-          type="submit"
-          class="w-full"
-          [disabled]="authStore.isPending() || form.invalid"
-        >
-          @if (authStore.isPending()) {
-            <hlm-spinner aria-label="Logging in" />
-          }
-          Login
-        </button>
+        <div class="flex w-full flex-col gap-3">
+          <button
+            hlmBtn
+            type="submit"
+            class="w-full"
+            [disabled]="authStore.isPending() || form.invalid"
+          >
+            @if (authStore.isPending()) {
+              <hlm-spinner aria-label="Logging in" />
+            }
+            Login
+          </button>
+
+          <a hlmBtn variant="link" routerLink="/auth/register" [queryParams]="returnUrlQueryParams">
+            Create account
+          </a>
+        </div>
       </hlm-card-footer>
     </form>
   `,
@@ -88,6 +95,7 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
     HlmInputImports,
     HlmSpinnerImports,
     ReactiveFormsModule,
+    RouterLink,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -96,8 +104,13 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
 })
 export class LoginPage {
   private readonly _fb = inject(FormBuilder).nonNullable;
+  private readonly _route = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   protected readonly authStore = inject(AuthStore);
+  protected readonly returnUrl = getSafeAuthReturnUrl(
+    this._route.snapshot.queryParamMap.get('returnUrl'),
+  );
+  protected readonly returnUrlQueryParams = this.returnUrl ? { returnUrl: this.returnUrl } : null;
 
   readonly form = this._fb.group({
     email: this._fb.control('', [Validators.required, Validators.email]),
@@ -106,7 +119,7 @@ export class LoginPage {
 
   private readonly _navigateAfterAuth = effect(() => {
     if (this.authStore.isSuccess()) {
-      void this._router.navigateByUrl('/discover');
+      void this._router.navigateByUrl(this.returnUrl ?? '/discover');
     }
   });
 
