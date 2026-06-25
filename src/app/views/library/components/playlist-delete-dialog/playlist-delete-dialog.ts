@@ -1,25 +1,26 @@
 import { Component, computed, DestroyRef, inject, input, output } from '@angular/core';
-import { PlaylistDialog, PlaylistDialogSubmitEvent } from '../playlist-dialog/playlist-dialog';
-import { HlmDialogImports } from '@spartan-ng/helm/dialog';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PlaylistWithTracks } from '@models/playlist';
 import { JamendoService } from '@services/jamendo-api';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BrnDialogRef } from '@spartan-ng/brain/dialog';
+import { HlmButtonImports } from '@spartan-ng/helm/button';
+import { HlmDialogImports } from '@spartan-ng/helm/dialog';
 
 @Component({
-  selector: 'app-playlist-edit-dialog',
-  imports: [PlaylistDialog, HlmDialogImports],
-  templateUrl: './playlist-edit-dialog.html',
+  selector: 'app-playlist-delete-dialog',
+  imports: [HlmDialogImports, HlmButtonImports],
+  templateUrl: './playlist-delete-dialog.html',
 })
-export class PlaylistEditDialog {
+export class PlaylistDeleteDialog {
   private jamendoService = inject(JamendoService);
   private destroyRef = inject(DestroyRef);
 
   playlist = input<PlaylistWithTracks | null>(null);
   state = computed(() => (this.playlist() ? 'open' : 'closed'));
   closed = output<void>();
-  edited = output<void>();
+  deleted = output<void>();
 
-  updatePlaylist(event: PlaylistDialogSubmitEvent): void {
+  deletePlaylist(dialogRef: BrnDialogRef): void {
     const currentPlaylist = this.playlist();
 
     if (!currentPlaylist) {
@@ -27,15 +28,15 @@ export class PlaylistEditDialog {
     }
 
     this.jamendoService
-      .updatePlaylist(currentPlaylist.id, event.data)
+      .deletePlaylist(currentPlaylist.id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          event.dialogRef.close();
-          this.edited.emit();
+          dialogRef.close();
+          this.deleted.emit();
         },
         error: (error) => {
-          console.error('Failed to update playlist', error);
+          console.error('Failed to delete playlist', error);
         },
       });
   }

@@ -7,7 +7,7 @@
     </p>
   </hlm-dialog-header>
 
-  <form (submit)="submitForm(ctx)" class="grid gap-4 py-4">
+  <form (submit)="submitForm(ctx, $event)" class="grid gap-4 py-4">
     <div class="grid grid-cols-4 items-center gap-4">
       <label hlmLabel for="name" class="text-right">Name</label>
       <input
