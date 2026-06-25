@@ -1,24 +1,24 @@
 <td hlmTableCell class="flex min-w-72 items-center gap-3">
   <span
-    class="inline-flex h-20 w-20 flex-none items-center justify-center rounded-sm bg-muted font-bold text-foreground uppercase"
+    class="inline-flex h-20 w-20 flex-none items-center justify-center rounded-sm bg-brand-border font-bold text-foreground uppercase"
     aria-hidden="true"
   >
-    <ng-icon hlm size="xl" name="lucideMusic" color="var(--muted-foreground)" aria-hidden="true" />
+    <ng-icon hlm size="xl" name="lucideMusic" color="var(--color-brand-muted)" aria-hidden="true" />
   </span>
   <span class="grid min-w-0 gap-0.5">
     <span class="font-bold text-foreground" data-testid="track-title">
       {{ playlist().name }}
     </span>
-    <span class="text-muted-foreground">User name</span>
+    <span class="text-brand-muted">{{ playlist().user_name }}</span>
   </span>
 </td>
-<td hlmTableCell class="w-26 text-center font-semibold text-muted-foreground tabular-nums">
-  {{ playlist().trackCount }}
+<td hlmTableCell class="w-26 text-center font-semibold text-brand-muted tabular-nums">
+  {{ playlist().tracks.length }}
 </td>
-<td hlmTableCell class="w-26 text-right font-semibold text-muted-foreground tabular-nums">
-  {{ playlist().totalDuration | duration }}
+<td hlmTableCell class="w-26 text-right font-semibold text-brand-muted tabular-nums">
+  {{ playlist().tracks | totalDuration | duration }}
 </td>
-<td hlmTableCell class="w-26 text-right font-semibold text-muted-foreground tabular-nums">
+<td hlmTableCell class="w-26 text-right font-semibold text-brand-muted tabular-nums">
   <button
     hlmBtn
     class="px-2"
@@ -27,12 +27,7 @@
   >
     <ng-icon hlm size="sm" name="lucidePencil" aria-hidden="true" />
   </button>
-  <button
-    hlmBtn
-    class="px-2"
-    aria-label="Delete playlist {{ playlist().name }}"
-    (click)="deletePlaylist($event)"
-  >
+  <button hlmBtn class="px-2" aria-label="Delete playlist {{ playlist().name }}">
     <ng-icon hlm size="sm" name="lucideTrash2" aria-hidden="true" />
   </button>
 </td>

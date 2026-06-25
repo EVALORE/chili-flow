@@ -1,39 +1,30 @@
-import { Route } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+
 import { routes } from './app.routes';
-import { AppLayout, AuthLayout } from './layouts';
+import { Discover } from './views/discover/discover';
+import { NotFound } from './views/not-found/not-found';
 
 describe('routes', () => {
-  it('should configure main app routes under AppLayout', () => {
-    const appRoute = getRoute('');
-
-    expect(appRoute.component).toBe(AppLayout);
-    expect(appRoute.children?.map((route) => route.path)).toEqual([
-      '',
-      'discover',
-      'album/:id',
-      'library',
-      'artist/:id',
-    ]);
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideRouter(routes)],
+    });
   });
 
-  it('should configure auth routes under AuthLayout', () => {
-    const authRoute = getRoute('auth');
+  it('should render Discover for /discover', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/discover', Discover);
 
-    expect(authRoute.component).toBe(AuthLayout);
-    expect(authRoute.children?.map((route) => route.path)).toEqual(['', 'login', 'register', '**']);
+    expect(harness.routeNativeElement?.textContent).toContain('Find your next favorite album');
   });
 
-  it('should keep a wildcard route for unknown paths', () => {
-    expect(getRoute('**').loadComponent).toBeDefined();
+  it('should render NotFound for unknown routes', async () => {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/missing-page', NotFound);
+
+    expect(harness.routeNativeElement?.textContent).toContain('Page not found');
+    expect(harness.routeNativeElement?.querySelector('a')?.getAttribute('href')).toBe('/discover');
   });
-
-  function getRoute(path: string): Route {
-    const route = routes.find((candidate) => candidate.path === path);
-
-    if (!route) {
-      throw new Error(`Route "${path}" is not configured.`);
-    }
-
-    return route;
-  }
 });

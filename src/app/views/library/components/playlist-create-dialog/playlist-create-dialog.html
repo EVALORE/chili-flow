@@ -1,7 +1,12 @@
 <hlm-dialog>
-  <button id="create-playlist-btn" hlmBtn class="rounded-full px-4" hlmDialogTrigger>
+  <button
+    id="create-playlist-btn"
+    hlmBtn
+    class="bg-brand-border rounded-full px-4"
+    hlmDialogTrigger
+  >
     <ng-icon hlm size="sm" name="lucidePlus" aria-hidden="true" />
     <span>Create</span>
   </button>
-  <app-playlist-dialog (submitted)="createPlaylist($event)"></app-playlist-dialog>
+  <app-playlist-dialog></app-playlist-dialog>
 </hlm-dialog>
