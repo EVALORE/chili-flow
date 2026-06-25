@@ -26,7 +26,7 @@ import { PlaylistWithTracks } from '@models/playlist';
   providedIn: 'root',
 })
 export class JamendoService {
-  private baseUrl = environment.apiBaseUrl;
+  private baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
   getAlbumWithTracks(albumId: string): Observable<AlbumWithTracks> {
