@@ -4,9 +4,10 @@ export interface Playlist {
   id: string;
   name: string;
   description: string;
-  creationdate: string;
-  user_id: string;
-  user_name: string;
+  totalDuration: number;
+  trackCount: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface PlaylistWithTracks extends Playlist {
