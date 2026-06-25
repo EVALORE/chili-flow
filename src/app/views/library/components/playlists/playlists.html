@@ -6,27 +6,19 @@
       </caption>
       <thead hlmTableHeader>
         <tr hlmTableRow>
-          <th hlmTableHead scope="col" class="text-xs uppercase text-muted-foreground">Name</th>
-          <th hlmTableHead scope="col" class="text-xs uppercase text-muted-foreground">
-            Track count
-          </th>
-          <th
-            hlmTableHead
-            class="w-26 text-right text-xs uppercase text-muted-foreground"
-            scope="col"
-          >
+          <th hlmTableHead scope="col" class="text-xs uppercase text-brand-muted">Name</th>
+          <th hlmTableHead scope="col" class="text-xs uppercase text-brand-muted">Track count</th>
+          <th hlmTableHead class="w-26 text-right text-xs uppercase text-brand-muted" scope="col">
             <ng-icon hlm size="sm" name="lucideClock" aria-hidden="true" />
             <span class="sr-only">Duration</span>
           </th>
-          <th hlmTableHead scope="col" class="text-xs uppercase text-muted-foreground"></th>
+          <th hlmTableHead scope="col" class="text-xs uppercase text-brand-muted"></th>
         </tr>
       </thead>
       <tbody hlmTableBody>
         @if (loading()) {
           <tr hlmTableRow>
-            <td hlmTableCell class="h-20 text-center text-muted-foreground">
-              Loading playlists...
-            </td>
+            <td hlmTableCell class="h-20 text-center text-brand-muted">Loading playlists...</td>
           </tr>
         } @else if (error()) {
           <tr hlmTableRow>
@@ -36,7 +28,7 @@
           </tr>
         } @else if (playlists().length === 0) {
           <tr hlmTableRow>
-            <td hlmTableCell class="h-20 text-center text-muted-foreground" colspan="4">
+            <td hlmTableCell class="h-20 text-center text-brand-muted" colspan="4">
               No playlists found.
             </td>
           </tr>

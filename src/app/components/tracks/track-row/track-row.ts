@@ -18,9 +18,9 @@ import { artistsText } from '../tracks.utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     hlmTableRow: 'true',
-    class: 'group text-muted-foreground',
-    '[class.bg-primary/10]': 'isCurrentTrack()',
-    '[class.text-primary]': 'isCurrentTrack()',
+    class: 'group text-brand-muted',
+    '[class.bg-brand-secondary/10]': 'isCurrentTrack()',
+    '[class.text-brand-secondary]': 'isCurrentTrack()',
     '[attr.aria-current]': "isCurrentTrack() ? 'true' : null",
     '[attr.data-testid]': "'track-row-' + track().id",
   },

@@ -1,13 +1,13 @@
 <main
   class="mx-auto grid min-h-[calc(100vh-4rem)] w-[min(100%,72rem)] content-start gap-8 px-4 py-8"
 >
-  <section hlmCard class="w-[min(100%,42rem)] border-border bg-card">
+  <section hlmCard class="w-[min(100%,42rem)] border-brand-border bg-brand-surface">
     <div hlmCardHeader>
       <p hlmCardDescription>Discover</p>
       <h1 hlmCardTitle>Find your next favorite album</h1>
     </div>
 
-    <div hlmCardContent class="leading-7 text-muted-foreground">
+    <div hlmCardContent class="leading-7 text-brand-muted">
       <p>
         Explore new music, revisit albums, and keep the flow moving. More discovery features will
         live here as the experience grows.
@@ -17,7 +17,7 @@
 
   <section class="grid w-full gap-4" aria-labelledby="popular-artists-title">
     <div class="grid gap-1">
-      <p class="text-xs font-bold tracking-normal text-muted-foreground uppercase">Last month</p>
+      <p class="text-xs font-bold tracking-normal text-brand-muted uppercase">Last month</p>
       <h2 id="popular-artists-title" class="text-2xl font-extrabold text-foreground">
         Popular artists
       </h2>
@@ -29,12 +29,12 @@
         <!-- TODO: skeleton cards-->
       } @else if (error()) {
         <!--TMP solution-->
-        <p class="text-muted-foreground">{{ error() }}</p>
+        <p class="text-brand-muted">{{ error() }}</p>
       } @else {
         @for (artist of popularArtists(); track artist.id) {
           <app-artist-card [artist]="artist" />
         } @empty {
-          <p class="text-muted-foreground">No popular artists right now.</p>
+          <p class="text-brand-muted">No popular artists right now.</p>
         }
       }
     </div>
@@ -42,9 +42,7 @@
 
   <section class="grid w-full gap-4" aria-labelledby="featured-albums-title">
     <div class="grid gap-1">
-      <p class="text-xs font-bold tracking-normal text-muted-foreground uppercase">
-        Featured albums
-      </p>
+      <p class="text-xs font-bold tracking-normal text-brand-muted uppercase">Featured albums</p>
       <h2 id="featured-albums-title" class="text-2xl font-extrabold text-foreground">
         Fresh covers
       </h2>
@@ -59,9 +57,7 @@
 
   <section class="grid w-full gap-4" aria-labelledby="featured-tracks-title">
     <div class="grid gap-1">
-      <p class="text-xs font-bold tracking-normal text-muted-foreground uppercase">
-        Featured tracks
-      </p>
+      <p class="text-xs font-bold tracking-normal text-brand-muted uppercase">Featured tracks</p>
       <h2 id="featured-tracks-title" class="text-2xl font-extrabold text-foreground">
         New signals
       </h2>

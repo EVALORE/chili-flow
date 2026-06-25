@@ -30,7 +30,12 @@
     </div>
 
     <hlm-dialog-footer>
-      <button hlmBtn type="submit" class="rounded-full" [disabled]="PlaylistForm().invalid()">
+      <button
+        hlmBtn
+        type="submit"
+        class="bg-brand-border rounded-full"
+        [disabled]="PlaylistForm().invalid()"
+      >
         {{ mode() === 'create' ? 'Create' : 'Save' }}
       </button>
     </hlm-dialog-footer>
