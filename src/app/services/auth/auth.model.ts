@@ -1,4 +1,6 @@
-interface AuthUser {
+export type AuthStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export interface AuthUser {
   id: string;
   email: string;
   createdAt: string;
@@ -22,6 +24,6 @@ export interface AuthResponse {
 
 export interface AuthState {
   user: AuthUser | null;
-  loading: boolean;
   error: string | null;
+  status: AuthStatus;
 }

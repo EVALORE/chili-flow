@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthStore } from '@services/auth/auth.store';
 import { HlmAlertImports } from '@spartan-ng/helm/alert';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
@@ -15,7 +16,7 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
       class="w-full"
       [formGroup]="form"
       (ngSubmit)="submit()"
-      [attr.aria-busy]="authStore.loading()"
+      [attr.aria-busy]="authStore.isPending()"
     >
       <hlm-card-header>
         <h1 hlmCardTitle>Create account</h1>
@@ -69,9 +70,9 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
           hlmBtn
           type="submit"
           class="w-full"
-          [disabled]="authStore.loading() || form.invalid"
+          [disabled]="authStore.isPending() || form.invalid"
         >
-          @if (authStore.loading()) {
+          @if (authStore.isPending()) {
             <hlm-spinner aria-label="Creating account" />
           }
           Create account
@@ -95,11 +96,18 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
 })
 export class RegisterPage {
   private readonly _fb = inject(FormBuilder).nonNullable;
-  protected readonly authStore = inject(AuthStore);
+  private readonly _router = inject(Router);
+  readonly authStore = inject(AuthStore);
 
   readonly form = this._fb.group({
     email: this._fb.control('', [Validators.required, Validators.email]),
     password: this._fb.control('', [Validators.required, Validators.minLength(8)]),
+  });
+
+  private readonly _navigateAfterAuth = effect(() => {
+    if (this.authStore.isSuccess()) {
+      void this._router.navigateByUrl('/discover');
+    }
   });
 
   submit() {
@@ -108,7 +116,7 @@ export class RegisterPage {
       return;
     }
 
-    if (!this.authStore.canSubmit()) {
+    if (this.authStore.isPending()) {
       return;
     }
 

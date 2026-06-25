@@ -19,8 +19,8 @@ export const AuthStore = signalStore(
 
   withState<AuthState>({
     user: null,
-    loading: false,
     error: null,
+    status: 'idle',
   }),
 
   withProps(() => ({
@@ -28,9 +28,11 @@ export const AuthStore = signalStore(
     token: inject(AuthToken),
   })),
 
-  withComputed(({ user, loading }) => ({
-    isAuthenticated: computed(() => Boolean(user())),
-    canSubmit: computed(() => !loading()),
+  withComputed(({ user, status }) => ({
+    isAuthenticated: computed(() => Boolean(user()) && status() === 'success'),
+    isPending: computed(() => status() === 'loading'),
+    hasError: computed(() => status() === 'error'),
+    isSuccess: computed(() => status() === 'success'),
   })),
 
   withMethods((store) => {
@@ -39,7 +41,7 @@ export const AuthStore = signalStore(
 
       patchState(store, {
         user: response.user,
-        loading: false,
+        status: 'success',
         error: null,
       });
     };
@@ -49,7 +51,7 @@ export const AuthStore = signalStore(
 
       patchState(store, {
         user: null,
-        loading: false,
+        status: 'error',
         error: message,
       });
     };
@@ -57,7 +59,7 @@ export const AuthStore = signalStore(
     return {
       login: rxMethod<LoginRequest>(
         pipe(
-          tap(() => patchState(store, { loading: true, error: null })),
+          tap(() => patchState(store, { error: null, status: 'loading' })),
           exhaustMap((body) =>
             store.http.login(body).pipe(
               tapResponse({
@@ -71,7 +73,7 @@ export const AuthStore = signalStore(
 
       register: rxMethod<RegisterRequest>(
         pipe(
-          tap(() => patchState(store, { loading: true, error: null })),
+          tap(() => patchState(store, { status: 'loading', error: null })),
           exhaustMap((body) =>
             store.http.register(body).pipe(
               tapResponse({
@@ -87,7 +89,7 @@ export const AuthStore = signalStore(
 
         patchState(store, {
           user: null,
-          loading: false,
+          status: 'idle',
           error: null,
         });
       },
