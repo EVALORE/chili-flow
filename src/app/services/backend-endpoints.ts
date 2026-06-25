@@ -14,7 +14,7 @@ export class BackendEndpoints {
   }
 
   playlists() {
-    return `${this.apiUrl}/${this.apiUrl}/playlists`;
+    return `${this.apiUrl}/playlists`;
   }
 
   playlist(playlistId: string) {
@@ -22,7 +22,7 @@ export class BackendEndpoints {
   }
 
   tracks(playlistId: string) {
-    return `${this.apiUrl}/${this.playlist(playlistId)}/tracks`;
+    return `${this.playlist(playlistId)}/tracks`;
   }
 
   track(playlistId: string, trackId: string) {
@@ -33,3 +33,4 @@ export class BackendEndpoints {
     return `${this.apiUrl}/recently-played`;
   }
 }
+
