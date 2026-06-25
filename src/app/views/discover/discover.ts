@@ -13,14 +13,9 @@ import { ArtistModel } from '@views/artist/artist.model';
 import { ArtistCard } from '@components/artist-card';
 import { JamendoService } from '@services/jamendo-api';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ArtistModel } from '@views/artist/artist.model';
-import { ArtistCard } from '@components/artist-card';
-import { JamendoService } from '@services/jamendo-api';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-discover',
-  imports: [AlbumCard, HlmCardImports, Tracks, ArtistCard],
   imports: [AlbumCard, HlmCardImports, Tracks, ArtistCard],
   templateUrl: './discover.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
