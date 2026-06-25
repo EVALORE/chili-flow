@@ -44,5 +44,3 @@ export interface GetArtistTracksApiResponse {
   headers: JamendoHeadersApiResponse;
   results: ArtistTracksApiResponse[];
 }
-
-
