@@ -6,25 +6,25 @@
     data-testid="album-card-loading"
   >
     <div
-      class="aspect-square w-full min-w-0 animate-pulse overflow-hidden rounded-md bg-linear-to-r from-brand-border via-white/20 to-brand-border"
+      class="aspect-square w-full min-w-0 animate-pulse overflow-hidden rounded-md bg-linear-to-r from-muted via-background/20 to-muted"
     ></div>
     <div class="grid min-w-0 gap-1">
       <span
-        class="block h-3.5 w-[82%] animate-pulse rounded-full bg-linear-to-r from-brand-border via-white/20 to-brand-border"
+        class="block h-3.5 w-[82%] animate-pulse rounded-full bg-linear-to-r from-muted via-background/20 to-muted"
       ></span>
       <span
-        class="block h-3.5 w-[58%] animate-pulse rounded-full bg-linear-to-r from-brand-border via-white/20 to-brand-border"
+        class="block h-3.5 w-[58%] animate-pulse rounded-full bg-linear-to-r from-muted via-background/20 to-muted"
       ></span>
     </div>
   </article>
 } @else if (album(); as albumData) {
   <a
-    class="grid w-full min-w-0 max-w-56 cursor-pointer gap-3 rounded-lg border border-transparent p-3 text-foreground no-underline transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-brand-border hover:bg-brand-surface focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ring"
+    class="grid w-full min-w-0 max-w-56 cursor-pointer gap-3 rounded-lg border border-transparent p-3 text-foreground no-underline transition-[background-color,border-color,transform] duration-150 ease-out hover:-translate-y-px hover:border-border hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-ring"
     [routerLink]="['/album', albumData.id]"
     [attr.aria-label]="'Open album ' + albumData.title + ' by ' + albumData.artist"
     [attr.data-testid]="'album-card-' + albumData.id"
   >
-    <span class="aspect-square w-full min-w-0 overflow-hidden rounded-md bg-brand-border">
+    <span class="aspect-square w-full min-w-0 overflow-hidden rounded-md bg-muted">
       @if (albumData.coverUrl) {
         <img
           class="block h-full w-full object-cover"
@@ -33,7 +33,7 @@
         />
       } @else {
         <span
-          class="grid h-full w-full place-items-center bg-brand-border text-[clamp(2rem,34cqi,4.5rem)] leading-none font-extrabold text-foreground bg-[linear-gradient(135deg,color-mix(in_srgb,var(--color-brand-primary)_55%,transparent),transparent_58%)]"
+          class="grid h-full w-full place-items-center bg-muted text-[clamp(2rem,34cqi,4.5rem)] leading-none font-extrabold text-foreground bg-[linear-gradient(135deg,color-mix(in_srgb,var(--primary)_55%,transparent),transparent_58%)]"
           aria-hidden="true"
           data-testid="album-card-fallback"
         >
@@ -50,7 +50,7 @@
         {{ albumData.title }}
       </span>
       <span
-        class="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-[1.35] text-brand-muted"
+        class="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-sm leading-[1.35] text-muted-foreground"
         data-testid="album-card-artist"
       >
         {{ albumData.artist }}
