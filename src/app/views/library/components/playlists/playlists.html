@@ -34,26 +34,12 @@
           </tr>
         } @else {
           @for (playlist of playlists(); track playlist.id) {
-            <tr
-              app-playlist-item
-              [playlist]="playlist"
-              (edit)="editPlaylist($event)"
-              (delete)="deletePlaylist($event)"
-            ></tr>
+            <tr app-playlist-item [playlist]="playlist" (edit)="editPlaylist($event)"></tr>
           }
         }
       </tbody>
     </table>
   </div>
 
-  <app-playlist-edit-dialog
-    [playlist]="editingPlaylist()"
-    (closed)="cancelEditPlaylist()"
-    (edited)="onPlaylistEdited()"
-  />
-  <app-playlist-delete-dialog
-    [playlist]="deletingPlaylist()"
-    (closed)="cancelDeletePlaylist()"
-    (deleted)="onPlaylistDeleted()"
-  />
+  <app-playlist-edit-dialog [playlist]="editingPlaylist()" (closed)="cancelEditPlaylist()" />
 </section>

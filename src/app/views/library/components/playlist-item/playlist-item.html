@@ -9,14 +9,14 @@
     <span class="font-bold text-foreground" data-testid="track-title">
       {{ playlist().name }}
     </span>
-    <span class="text-brand-muted">User name</span>
+    <span class="text-brand-muted">{{ playlist().user_name }}</span>
   </span>
 </td>
 <td hlmTableCell class="w-26 text-center font-semibold text-brand-muted tabular-nums">
-  {{ playlist().trackCount }}
+  {{ playlist().tracks.length }}
 </td>
 <td hlmTableCell class="w-26 text-right font-semibold text-brand-muted tabular-nums">
-  {{ playlist().totalDuration | duration }}
+  {{ playlist().tracks | totalDuration | duration }}
 </td>
 <td hlmTableCell class="w-26 text-right font-semibold text-brand-muted tabular-nums">
   <button
@@ -27,12 +27,7 @@
   >
     <ng-icon hlm size="sm" name="lucidePencil" aria-hidden="true" />
   </button>
-  <button
-    hlmBtn
-    class="px-2"
-    aria-label="Delete playlist {{ playlist().name }}"
-    (click)="deletePlaylist($event)"
-  >
+  <button hlmBtn class="px-2" aria-label="Delete playlist {{ playlist().name }}">
     <ng-icon hlm size="sm" name="lucideTrash2" aria-hidden="true" />
   </button>
 </td>

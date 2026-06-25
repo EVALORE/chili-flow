@@ -1,12 +1,10 @@
-import { Component, DestroyRef, inject, output } from '@angular/core';
+import { Component } from '@angular/core';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmDialogImports } from '@spartan-ng/helm/dialog';
 import { HlmIcon } from '@spartan-ng/helm/icon';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucidePlus } from '@ng-icons/lucide';
-import { PlaylistDialog, PlaylistDialogSubmitEvent } from '../playlist-dialog/playlist-dialog';
-import { JamendoService } from '@services/jamendo-api';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PlaylistDialog } from '../playlist-dialog/playlist-dialog';
 
 @Component({
   selector: 'app-playlist-create-dialog',
@@ -18,23 +16,4 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
   templateUrl: './playlist-create-dialog.html',
 })
-export class PlaylistCreateDialog {
-  private jamendoService = inject(JamendoService);
-  private destroyRef = inject(DestroyRef);
-  created = output<void>();
-
-  createPlaylist(event: PlaylistDialogSubmitEvent): void {
-    this.jamendoService
-      .createPlaylist(event.data)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: () => {
-          event.dialogRef.close();
-          this.created.emit();
-        },
-        error: (error) => {
-          console.error('Failed to create playlist', error);
-        },
-      });
-  }
-}
+export class PlaylistCreateDialog {}

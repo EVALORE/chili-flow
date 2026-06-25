@@ -1,4 +1,4 @@
-import { Component, input, linkedSignal, output } from '@angular/core';
+import { Component, input, linkedSignal } from '@angular/core';
 import { form, FormField, required, schema } from '@angular/forms/signals';
 import { provideIcons } from '@ng-icons/core';
 import { lucidePlus } from '@ng-icons/lucide';
@@ -9,17 +9,12 @@ import { HlmLabelImports } from '@spartan-ng/helm/label';
 import { BrnDialogRef } from '@spartan-ng/brain/dialog';
 import { PlaylistWithTracks } from '@models/playlist';
 
-export interface PlaylistFormData {
+interface PlaylistModel {
   name: string;
   description: string;
 }
 
-export interface PlaylistDialogSubmitEvent {
-  data: PlaylistFormData;
-  dialogRef: BrnDialogRef;
-}
-
-const PlaylistSchema = schema<PlaylistFormData>((rootPath) => {
+const PlaylistSchema = schema<PlaylistModel>((rootPath) => {
   required(rootPath.name, { message: 'Name is required' });
 });
 
@@ -36,9 +31,8 @@ const PlaylistSchema = schema<PlaylistFormData>((rootPath) => {
 export class PlaylistDialog {
   mode = input<'create' | 'edit'>('create');
   playlist = input<PlaylistWithTracks | null>(null);
-  submitted = output<PlaylistDialogSubmitEvent>();
 
-  protected formState = linkedSignal<PlaylistFormData>(() => {
+  protected formState = linkedSignal<PlaylistModel>(() => {
     const currentPlaylist = this.playlist();
     if (this.mode() === 'edit' && currentPlaylist) {
       return {
@@ -51,21 +45,9 @@ export class PlaylistDialog {
       description: '',
     };
   });
-
   protected PlaylistForm = form(this.formState, PlaylistSchema);
 
-  submitForm(dialogRef: BrnDialogRef, event: Event): void {
-    event.preventDefault();
-
-    if (this.PlaylistForm().invalid()) {
-      return;
-    }
-
-    this.submitted.emit({
-      data: { ...this.formState() },
-      dialogRef,
-    });
-
-    this.formState.set({ name: '', description: '' });
+  submitForm(ctx: BrnDialogRef) {
+    ctx.close();
   }
 }

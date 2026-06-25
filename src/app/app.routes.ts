@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'discover' },
@@ -14,7 +13,6 @@ export const routes: Routes = [
   {
     path: 'library',
     loadComponent: () => import('@views/library'),
-    canActivate: [authGuard],
   },
   {
     path: 'artist/:id',

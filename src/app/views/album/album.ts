@@ -28,13 +28,13 @@ export class Album {
     }
 
     return album.tracks.map((track, index) => ({
-      id: track.sourceId,
-      title: track.title,
+      id: track.id,
+      title: track.name,
       durationSeconds: Number(track.duration) || 0,
-      artists: [album.artist],
-      album: album.title,
-      coverUrl: album.coverUrl,
-      position: Number(track.position) || index + 1,
+      artists: [album.artist_name],
+      album: album.name,
+      coverUrl: album.image,
+      position: Number(track.position || track.count) || index + 1,
     }));
   });
 }

@@ -1,15 +1,13 @@
 export interface Album {
-  source: string;
-  sourceId: string;
-  title: string;
-  artist: string;
-  artistId: string;
-  releaseDate: string;
-  coverUrl: string;
-  zipUrl: string;
-  shareUrl: string | null;
-  zipAllowed: boolean;
-  trackCount: number;
+  id: string;
+  name: string;
+  releasedate: string;
+  artist_id: string;
+  artist_name: string;
+  track_id: string;
+  image: string;
+  zip: string;
+  zip_allowed: boolean;
 }
 
 export interface AlbumWithTracks extends Album {
@@ -17,19 +15,13 @@ export interface AlbumWithTracks extends Album {
 }
 
 export interface Track {
-  source: string;
-  sourceId: string;
-  title: string;
-  artist: string;
-  artistId: string;
-  album: string;
-  albumId: string;
-  position: number;
-  duration: number;
-  coverUrl: string;
-  audioUrl: string;
-  downloadUrl: string;
-  shareUrl: string | null;
-  licenseUrl: string;
-  audiodownloadAllowed: boolean;
+  count: string;
+  id: string;
+  position: string;
+  name: string;
+  duration: string;
+  license_ccurl: string;
+  audio: string;
+  audiodownload: string;
+  audiodownload_allowed: boolean;
 }

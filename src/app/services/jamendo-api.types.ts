@@ -14,13 +14,72 @@ export interface JamendoHeadersApiResponse {
 
 export interface GetAlbumWithTracksResponse {
   headers: JamendoHeadersApiResponse;
-  results: AlbumWithTracks;
+  results: AlbumWithTracks[];
 }
 
 export interface GetFullArtistInfoApiResponse {
   headers: JamendoHeadersApiResponse;
   results: ArtistApiResponse[];
 }
+
+export interface GetArtistAlbumsApiResponse {
+  headers: JamendoHeadersApiResponse;
+  results: ArtistAlbumsApiResponse[];
+}
+
+export interface ArtistAlbumsApiResponse {
+  id: string;
+  name: string;
+  releasedate: string;
+  artist_id: string;
+  artist_name: string;
+  image: string;
+  zip: string;
+  shorturl: string;
+  shareurl: string;
+  zip_allowed: boolean;
+}
+
+export interface GetArtistTracksApiResponse {
+  headers: JamendoHeadersApiResponse;
+  results: ArtistTracksApiResponse[];
+}
+
+
+export interface GetFullArtistInfoApiResponse {
+  headers: JamendoHeadersApiResponse;
+  results: ArtistApiResponse[];
+}
+
+export interface GetArtistAlbumsApiResponse {
+  headers: JamendoHeadersApiResponse;
+  results: ArtistAlbumsApiResponse[];
+}
+
+export interface ArtistAlbumsApiResponse {
+  id: string;
+  name: string;
+  releasedate: string;
+  artist_id: string;
+  artist_name: string;
+  image: string;
+  zip: string;
+  shorturl: string;
+  shareurl: string;
+  zip_allowed: boolean;
+}
+
+export interface GetArtistTracksApiResponse {
+  headers: JamendoHeadersApiResponse;
+  results: ArtistTracksApiResponse[];
+}
+
+
+export interface GetFullArtistInfoApiResponse {
+  headers: JamendoHeadersApiResponse;
+  results: ArtistApiResponse[];
+}
+
 
 export interface GetArtistAlbumsApiResponse {
   headers: JamendoHeadersApiResponse;
