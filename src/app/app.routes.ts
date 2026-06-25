@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
-import { AuthorizationLayout, AppLayout } from './layouts';
+import { AuthLayout, AppLayout } from './layouts';
 
 export const routes: Routes = [
   {
@@ -17,7 +17,7 @@ export const routes: Routes = [
 
   {
     path: 'auth',
-    component: AuthorizationLayout,
+    component: AuthLayout,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'login' },
       { path: 'login', loadComponent: () => import('@views/login') },
