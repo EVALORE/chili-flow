@@ -20,7 +20,7 @@
             <th hlmTableHead scope="col" [attr.aria-sort]="sortAria('title')">
               <button
                 type="button"
-                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-muted-foreground uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 [attr.aria-label]="sortLabel('title', 'title')"
                 (click)="toggleSort('title')"
               >
@@ -34,7 +34,7 @@
             <th hlmTableHead scope="col" [attr.aria-sort]="sortAria('album')">
               <button
                 type="button"
-                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-muted-foreground uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 [attr.aria-label]="sortLabel('album', 'album')"
                 (click)="toggleSort('album')"
               >
@@ -48,7 +48,7 @@
             <th hlmTableHead scope="col" [attr.aria-sort]="sortAria('date')">
               <button
                 type="button"
-                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-muted-foreground uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 [attr.aria-label]="sortLabel('date', 'date added')"
                 (click)="toggleSort('date')"
               >
@@ -67,7 +67,7 @@
             >
               <button
                 type="button"
-                class="inline-flex min-h-8 w-full cursor-pointer items-center justify-end gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-brand-muted uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                class="inline-flex min-h-8 w-full cursor-pointer items-center justify-end gap-1.5 rounded-md border-0 bg-transparent text-xs font-bold tracking-normal text-muted-foreground uppercase hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 [attr.aria-label]="sortLabel('duration', 'duration')"
                 (click)="toggleSort('duration')"
               >
@@ -91,7 +91,7 @@
           <tr hlmTableRow>
             <td
               hlmTableCell
-              class="h-20 text-center text-brand-muted"
+              class="h-20 text-center text-muted-foreground"
               [attr.colspan]="visibleColumns().length"
             >
               Loading tracks...
@@ -112,7 +112,7 @@
           <tr hlmTableRow>
             <td
               hlmTableCell
-              class="h-20 text-center text-brand-muted"
+              class="h-20 text-center text-muted-foreground"
               [attr.colspan]="visibleColumns().length"
             >
               {{ emptyMessage() }}

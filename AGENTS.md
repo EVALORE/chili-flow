@@ -120,3 +120,75 @@ Here is a link to the most recent Angular style guide https://angular.dev/style-
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+# Angular Naming Rules
+
+Follow these naming rules when creating or modifying Angular files.
+
+## Core rules
+
+- Use `kebab-case` for file names.
+- Use `PascalCase` for exported classes, interfaces, types, and enums.
+- The primary export must match the file name.
+- Do not add generic suffixes by default: `Component`, `Service`, `Model`.
+- Use semantic suffixes when they clarify architectural role.
+
+## Components
+
+- Route pages: no suffix.
+  - `login.ts` → `Login`
+  - `register.ts` → `Register`
+
+- Layout components: use `Layout`.
+  - `auth-layout.ts` → `AuthLayout`
+  - `dashboard-layout.ts` → `DashboardLayout`
+
+- Reusable UI components: use the UI name directly.
+  - `user-card.ts` → `UserCard`
+  - `empty-state.ts` → `EmptyState`
+
+## Infrastructure
+
+Use semantic names by responsibility:
+
+- `auth-api.ts` → `AuthApi`
+- `auth-store.ts` → `AuthStore`
+- `auth-session.ts` → `AuthSession`
+- `auth.guard.ts` → `authGuard`
+- `user.resolver.ts` → `userResolver`
+- `auth.routes.ts` → `AUTH_ROUTES`
+
+## Types
+
+- Domain type: `user.ts` → `User`
+- DTO: `UserDto`
+- Request: `UserRequest`
+- Response: `UserResponse`
+- Form type: `UserForm`
+
+## Decision rule
+
+Remove a suffix if it only repeats Angular mechanics.
+
+Keep a suffix if it explains architectural role.
+
+Examples to remove:
+
+- `Component`
+- `Service`
+- `Model`
+
+Examples to keep:
+
+- `Layout`
+- `Store`
+- `Api`
+- `Dto`
+- `Request`
+- `Response`
+- `Form`
+- `Guard`
+- `Resolver`
+- `Routes`
+- `Mapper`
+- `Config`
