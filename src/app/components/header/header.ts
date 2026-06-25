@@ -11,7 +11,6 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
 
 @Component({
   selector: 'app-header',
-  standalone: true,
   imports: [
     NgIcon,
     RouterLink,
@@ -20,10 +19,10 @@ import { HlmButtonImports } from '@spartan-ng/helm/button';
     HlmInputImports,
     HlmButtonImports,
   ],
-  templateUrl: './header.component.html',
+  templateUrl: './header.html',
   providers: [provideIcons({ lucideSearch, lucideCircleUserRound, lucideHome })],
 })
-export class HeaderComponent {
+export class Header {
   protected readonly appTitle = 'ChiliFlow';
   //TMP solution
   protected isLogged = signal<boolean>(false);

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { HeaderComponent } from '@components/header';
+import { Header } from '@components/header';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
       <router-outlet />
     </main>
   `,
-  imports: [HeaderComponent, RouterOutlet],
+  imports: [Header, RouterOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex min-h-svh flex-col',
