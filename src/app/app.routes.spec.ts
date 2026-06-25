@@ -3,7 +3,6 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from './app.routes';
-import { Discover } from './views/discover/discover';
 import { NotFound } from './views/not-found/not-found';
 
 describe('routes', () => {
@@ -15,7 +14,7 @@ describe('routes', () => {
 
   it('should render Discover for /discover', async () => {
     const harness = await RouterTestingHarness.create();
-    await harness.navigateByUrl('/discover', Discover);
+    await harness.navigateByUrl('/discover');
 
     expect(harness.routeNativeElement?.textContent).toContain('Find your next favorite album');
   });
