@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { getSafeAuthReturnUrl } from '@services/auth/auth-return-url';
@@ -49,37 +49,40 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
             <hlm-field-error validator="email">Enter a valid email address.</hlm-field-error>
           </hlm-field>
 
-          <hlm-field>
-            <label hlmFieldLabel for="password">Password</label>
-            <input
-              hlmInput
-              type="password"
-              autocomplete="new-password"
-              id="password"
-              formControlName="password"
-              required
-            />
-            <hlm-field-error validator="required">Password is required.</hlm-field-error>
-            <hlm-field-error validator="minlength">
-              Password must be at least 8 characters.
-            </hlm-field-error>
-          </hlm-field>
+          <div hlmFieldGroup [formGroup]="passwordForm">
+            <hlm-field>
+              <label hlmFieldLabel for="password">Password</label>
+              <input
+                hlmInput
+                type="password"
+                autocomplete="new-password"
+                id="password"
+                formControlName="password"
+                required
+              />
+              <hlm-field-error validator="required">Password is required.</hlm-field-error>
+              <hlm-field-error validator="minlength">
+                Password must be at least 8 characters.
+              </hlm-field-error>
+            </hlm-field>
 
-          <hlm-field>
-            <label hlmFieldLabel for="confirm-password">Confirm password</label>
-            <input
-              hlmInput
-              type="password"
-              autocomplete="new-password"
-              id="confirm-password"
-              formControlName="confirmPassword"
-              required
-            />
-            <hlm-field-error validator="required">Confirm your password.</hlm-field-error>
-            <hlm-field-error [forceShow]="showPasswordMismatch()">
-              Passwords do not match.
-            </hlm-field-error>
-          </hlm-field>
+            <hlm-field>
+              <label hlmFieldLabel for="confirm-password">Confirm password</label>
+              <input
+                hlmInput
+                type="password"
+                autocomplete="new-password"
+                id="confirm-password"
+                formControlName="confirmPassword"
+                required
+              />
+              <hlm-field-error validator="required">Confirm your password.</hlm-field-error>
+            </hlm-field>
+
+            @if (passwordForm.hasError('passwordMismatch') && passwordForm.touched) {
+              <hlm-field-error>Passwords do not match.</hlm-field-error>
+            }
+          </div>
         </hlm-field-group>
       </div>
 
@@ -128,16 +131,19 @@ export class RegisterPage {
     this._route.snapshot.queryParamMap.get('returnUrl'),
   );
   protected readonly returnUrlQueryParams = this.returnUrl ? { returnUrl: this.returnUrl } : null;
-  protected readonly submitted = signal(false);
 
-  readonly form = this._fb.group(
+  protected readonly passwordForm = this._fb.group(
     {
-      email: this._fb.control('', [Validators.required, Validators.email]),
       password: this._fb.control('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: this._fb.control('', Validators.required),
     },
     { validators: passwordsMatchValidator },
   );
+
+  readonly form = this._fb.group({
+    email: this._fb.control('', [Validators.required, Validators.email]),
+    passwords: this.passwordForm,
+  });
 
   private readonly _navigateAfterAuth = effect(() => {
     if (this.authStore.isSuccess()) {
@@ -145,16 +151,7 @@ export class RegisterPage {
     }
   });
 
-  showPasswordMismatch() {
-    return (
-      this.form.hasError('passwordMismatch') &&
-      (this.form.controls.confirmPassword.touched || this.submitted())
-    );
-  }
-
   submit() {
-    this.submitted.set(true);
-
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -164,7 +161,8 @@ export class RegisterPage {
       return;
     }
 
-    const { email, password } = this.form.getRawValue();
+    const { email } = this.form.getRawValue();
+    const { password } = this.passwordForm.getRawValue();
     this.authStore.register({ email, password });
   }
 }

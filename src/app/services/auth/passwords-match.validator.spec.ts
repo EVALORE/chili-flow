@@ -26,4 +26,23 @@ describe('passwordsMatchValidator', () => {
 
     expect(form.errors).toEqual({ passwordMismatch: true });
   });
+
+  it('should not return passwordMismatch while either password field is empty', () => {
+    const form = new FormGroup(
+      {
+        password: new FormControl('password123', { nonNullable: true }),
+        confirmPassword: new FormControl('', { nonNullable: true }),
+      },
+      { validators: passwordsMatchValidator },
+    );
+
+    expect(form.errors).toBeNull();
+
+    form.setValue({
+      password: '',
+      confirmPassword: 'password123',
+    });
+
+    expect(form.errors).toBeNull();
+  });
 });

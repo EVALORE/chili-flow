@@ -1,29 +1,14 @@
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-} from '@angular/forms';
-
-interface PasswordControls {
-  password: FormControl<string>;
-  confirmPassword: FormControl<string>;
-}
-
-const hasPasswordControls = (control: AbstractControl): control is FormGroup<PasswordControls> =>
-  control instanceof FormGroup &&
-  'password' in control.controls &&
-  'confirmPassword' in control.controls;
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export const passwordsMatchValidator: ValidatorFn = (
   control: AbstractControl,
 ): ValidationErrors | null => {
-  if (!hasPasswordControls(control)) {
+  const password = control.get('password')?.value;
+  const confirmPassword = control.get('confirmPassword')?.value;
+
+  if (!password || !confirmPassword) {
     return null;
   }
 
-  return control.controls.password.value === control.controls.confirmPassword.value
-    ? null
-    : { passwordMismatch: true };
+  return password === confirmPassword ? null : { passwordMismatch: true };
 };
