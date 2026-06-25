@@ -8,7 +8,7 @@ import { lucideSearch, lucideCircleUserRound, lucideHome } from '@ng-icons/lucid
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { HlmInputImports } from '@spartan-ng/helm/input';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
-import { AuthStore } from '@services/auth/auth.store';
+import { AuthStore } from '@services/auth/auth-store';
 
 @Component({
   selector: 'app-header',

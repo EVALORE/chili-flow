@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { getSafeAuthReturnUrl } from '@services/auth/auth-return-url';
-import { AuthStore } from '@services/auth/auth.store';
+import { AuthStore } from '@services/auth/auth-store';
+import { getReturnUrlState } from '@utils/return-url';
 import { HlmAlertImports } from '@spartan-ng/helm/alert';
 import { HlmButtonImports } from '@spartan-ng/helm/button';
 import { HlmCardImports } from '@spartan-ng/helm/card';
@@ -80,7 +80,12 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
             Login
           </button>
 
-          <a hlmBtn variant="link" routerLink="/auth/register" [queryParams]="returnUrlQueryParams">
+          <a
+            hlmBtn
+            variant="link"
+            routerLink="/auth/register"
+            [queryParams]="returnUrl.queryParams"
+          >
             Create account
           </a>
         </div>
@@ -102,15 +107,15 @@ import { HlmSpinnerImports } from '@spartan-ng/helm/spinner';
     class: 'block',
   },
 })
-export class LoginPage {
+export class Login {
   private readonly _fb = inject(FormBuilder).nonNullable;
   private readonly _route = inject(ActivatedRoute);
   private readonly _router = inject(Router);
   protected readonly authStore = inject(AuthStore);
-  protected readonly returnUrl = getSafeAuthReturnUrl(
-    this._route.snapshot.queryParamMap.get('returnUrl'),
-  );
-  protected readonly returnUrlQueryParams = this.returnUrl ? { returnUrl: this.returnUrl } : null;
+  protected readonly returnUrl = getReturnUrlState(this._route.snapshot.queryParamMap, {
+    fallbackUrl: '/discover',
+    blockedPathPrefixes: ['/auth'],
+  });
 
   readonly form = this._fb.group({
     email: this._fb.control('', [Validators.required, Validators.email]),
@@ -119,7 +124,7 @@ export class LoginPage {
 
   private readonly _navigateAfterAuth = effect(() => {
     if (this.authStore.isSuccess()) {
-      void this._router.navigateByUrl(this.returnUrl ?? '/discover');
+      void this._router.navigateByUrl(this.returnUrl.redirectUrl);
     }
   });
 

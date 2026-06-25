@@ -9,59 +9,11 @@ import {
   withState,
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { AuthToken } from './auth-token';
-import { AuthResponse, AuthState, AuthUser, LoginRequest, RegisterRequest } from './auth.model';
+import { AuthSession } from './auth-session';
+import { AuthResponse, AuthState, LoginRequest, RegisterRequest } from './auth';
 import { AuthApi } from './auth-api';
 import { exhaustMap, pipe, tap } from 'rxjs';
 import { tapResponse } from '@ngrx/operators';
-
-export const AUTH_USER_STORAGE_KEY = 'chili-flow.auth.user';
-
-const getStorage = (): Storage | null => {
-  try {
-    return globalThis.localStorage ?? null;
-  } catch {
-    return null;
-  }
-};
-
-const isAuthUser = (value: unknown): value is AuthUser => {
-  if (!value || typeof value !== 'object') {
-    return false;
-  }
-
-  const user = value as Partial<Record<keyof AuthUser, unknown>>;
-
-  return (
-    typeof user.id === 'string' &&
-    typeof user.email === 'string' &&
-    typeof user.createdAt === 'string' &&
-    typeof user.updatedAt === 'string'
-  );
-};
-
-const readStoredUser = (): AuthUser | null => {
-  const rawUser = getStorage()?.getItem(AUTH_USER_STORAGE_KEY);
-
-  if (!rawUser) {
-    return null;
-  }
-
-  try {
-    const user = JSON.parse(rawUser) as unknown;
-    return isAuthUser(user) ? user : null;
-  } catch {
-    return null;
-  }
-};
-
-const saveStoredUser = (user: AuthUser): void => {
-  getStorage()?.setItem(AUTH_USER_STORAGE_KEY, JSON.stringify(user));
-};
-
-const clearStoredUser = (): void => {
-  getStorage()?.removeItem(AUTH_USER_STORAGE_KEY);
-};
 
 export const AuthStore = signalStore(
   { providedIn: 'root' },
@@ -73,21 +25,19 @@ export const AuthStore = signalStore(
   }),
 
   withProps(() => ({
-    http: inject(AuthApi),
-    token: inject(AuthToken),
+    api: inject(AuthApi),
+    session: inject(AuthSession),
   })),
 
   withComputed(({ user, status }) => ({
     isAuthenticated: computed(() => Boolean(user())),
     isPending: computed(() => status() === 'loading'),
-    hasError: computed(() => status() === 'error'),
     isSuccess: computed(() => status() === 'success'),
   })),
 
   withMethods((store) => {
     const authSuccess = (response: AuthResponse) => {
-      store.token.set(response.accessToken);
-      saveStoredUser(response.user);
+      store.session.set(response);
 
       patchState(store, {
         user: response.user,
@@ -97,8 +47,7 @@ export const AuthStore = signalStore(
     };
 
     const authFailure = (message: string) => {
-      store.token.clear();
-      clearStoredUser();
+      store.session.clear();
 
       patchState(store, {
         user: null,
@@ -112,7 +61,7 @@ export const AuthStore = signalStore(
         pipe(
           tap(() => patchState(store, { error: null, status: 'loading' })),
           exhaustMap((body) =>
-            store.http.login(body).pipe(
+            store.api.login(body).pipe(
               tapResponse({
                 next: authSuccess,
                 error: () => authFailure('Login failed'),
@@ -126,7 +75,7 @@ export const AuthStore = signalStore(
         pipe(
           tap(() => patchState(store, { status: 'loading', error: null })),
           exhaustMap((body) =>
-            store.http.register(body).pipe(
+            store.api.register(body).pipe(
               tapResponse({
                 next: authSuccess,
                 error: () => authFailure('Registration failed'),
@@ -136,8 +85,7 @@ export const AuthStore = signalStore(
         ),
       ),
       logout: () => {
-        store.token.clear();
-        clearStoredUser();
+        store.session.clear();
 
         patchState(store, {
           user: null,
@@ -150,22 +98,14 @@ export const AuthStore = signalStore(
 
   withHooks({
     onInit(store) {
-      const token = store.token.get();
-      const user = readStoredUser();
+      const session = store.session.get();
 
-      if (token && user) {
+      if (session) {
         patchState(store, {
-          user,
+          user: session.user,
           status: 'success',
           error: null,
         });
-
-        return;
-      }
-
-      if (token || user) {
-        store.token.clear();
-        clearStoredUser();
       }
     },
   }),

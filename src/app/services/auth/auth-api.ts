@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BackendEndpoints } from '@services/backend-endpoints';
-import { AuthResponse, LoginRequest, RegisterRequest } from './auth.model';
+import { AuthResponse, LoginRequest, RegisterRequest } from './auth';
 
 @Injectable({ providedIn: 'root' })
 export class AuthApi {
